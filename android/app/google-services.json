@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "155650967190",
+    "project_id": "nucleo-casa-decor",
+    "storage_bucket": "nucleo-casa-decor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155650967190:android:47bbb35129e5300a25a4b7",
+        "android_client_info": {
+          "package_name": "com.example.nucleo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "155650967190-nak6lvjdrc2pgd7aqui8e3p1kmbqcu89.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq_9aiWBiVDatSZqUD32fy1pPH2SdA0UA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "155650967190-nak6lvjdrc2pgd7aqui8e3p1kmbqcu89.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
