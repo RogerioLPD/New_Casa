@@ -47,7 +47,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
               ),
             )
           : PreferredSize(
-              preferredSize: const Size.fromHeight(60), child: Container()),
+              preferredSize: const Size.fromHeight(0), child: Container()),
       body: StreamBuilder<UserDetails>(
           stream: _controller.userController.stream,
           builder: (context, snapshot) {
@@ -64,111 +64,308 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
   }
 
   bodyForMobile(BuildContext context, AsyncSnapshot snapshot) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: Column(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 150,
-                //child: Icon(Icons.account_circle_outlined, size: 150,),
-                child: CachedNetworkImage(
-                  height: 150,
-                  fit: BoxFit.cover,
-                  imageUrl: snapshot.data!.photo,
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(
-                    Icons.account_circle_outlined,
-                    size: 150,
-                  ),
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(80)),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+    return Scaffold(
+      backgroundColor: Colors.grey.shade300,
+      body: SingleChildScrollView( 
+        child: Stack(
+          
+          children: <Widget>[
+           // Row(
+             // mainAxisAlignment: MainAxisAlignment.center,
+              //children: [
+                SizedBox(
+                    height: 250,
+                   width: double.infinity,
+                  //child: Icon(Icons.account_circle_outlined, size: 150,),
+                  child: CachedNetworkImage(
+                    
+                    fit: BoxFit.cover,
+                    imageUrl: snapshot.data!.photo,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.account_circle_outlined,
+                      size: 150,
+                    ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                       // borderRadius: const BorderRadius.all(Radius.circular(80)),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
+                ),  
+            Container(
+              margin: const EdgeInsets.fromLTRB(16.0, 200.0, 16.0, 16.0),
+              child: Column(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.all(16.0),
+                        margin: const EdgeInsets.only(top: 16.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Container(
+                              margin: const EdgeInsets.only(left: 96.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  profileItem(snapshot.data!.nome, TextStyle(fontSize: 24,fontWeight: FontWeight.bold,color: Colors.blueGrey[800])),
+                                  const SizedBox(height: 10.0),
+                                  profileItem(
+                        snapshot.data!.type, const TextStyle(fontSize: 14,fontWeight: FontWeight.bold)),
+                                 
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            /*Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Column(
+                                    children: const <Widget>[
+                                      Text(""),
+                                      Text("")
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: const <Widget>[
+                                      Text(""),
+                                      Text("")
+                                    ],
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    children: const <Widget>[
+                                      Text(""),
+                                      Text("")
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),*/
+                          ],
+                        ),
+                      ),
+                        
+                      
+                      Container(
+                        height: 80,
+                        width: 80,
+                        /*decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                                image: NetworkImage(image), fit: BoxFit.cover)),*/
+                        margin: const EdgeInsets.only(left: 16.0),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                    imageUrl: snapshot.data!.photo,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.account_circle_outlined,
+                      size: 150,
+                    ),
+                    imageBuilder: (context, imageProvider) => Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(10)),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                        ),
+                      ),
+                    ],
+                  ),
+      
+                  
+              
+              
+            
+            const SizedBox(height: 20.0),
+                  Container(
+                    
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: Column(
+                      children:  <Widget>[
+                        const ListTile(
+                          title: Text("Informações Pessoais"),
+                        ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.account_balance_wallet, color: Colors.grey, size: 26),
+                         title: const Text("Segmento", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.segment, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.badge_rounded, color: Colors.grey, size: 26),
+                         title: const Text("Tipo", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.type, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.badge_rounded, color: Colors.grey, size: 26),
+                         title: const Text("CPF", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.cpf, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.badge_rounded, color: Colors.grey, size: 26),
+                         title: const Text("CNPJ", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.cnpj, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.phone, color: Colors.grey, size: 26),
+                         title: const Text("Telefone", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.phone, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.phone_iphone, color: Colors.grey, size: 26),
+                         title: const Text("Celular", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.cellPhone, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.home_work, color: Colors.grey, size: 26),
+                         title: const Text("Endereço", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.address, const TextStyle(fontSize: 16)),
+                         trailing: profileItem(snapshot.data!.number, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.home_work, color: Colors.grey, size: 26),
+                         title: const Text("Bairro", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.district, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.home_work, color: Colors.grey, size: 26),
+                         title: const Text("Cidade", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.city, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.home_work, color: Colors.grey, size: 26),
+                         title: const Text("Estado", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.state, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                        ListTile(
+                        leading: const Icon(Icons.home_work, color: Colors.grey, size: 26),
+                         title: const Text("CEP", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
+                         subtitle: profileItem(snapshot.data!.cep, const TextStyle(fontSize: 16)),
+                         ),
+                        const Divider(),
+                      ],
+                    ),
+                  )
+                
+              
+              
+            
+                
+              
+            
+          
+            
+            
+              /* const SizedBox(
+                height: 12,
+              ),
+            
+            profileItem(snapshot.data!.nome, const TextStyle(fontSize: 20)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Text("Segmento:", style: TextStyle(fontSize: 18)),
+                    const SizedBox(width: 10),
+                    profileItem(
+                        snapshot.data!.segment, const TextStyle(fontSize: 18)),
+                  ],
                 ),
+                Row(
+                  children: [
+                    const Text("Tipo:", style: TextStyle(fontSize: 18)),
+                    const SizedBox(width: 10),
+                    profileItem(
+                        snapshot.data!.type, const TextStyle(fontSize: 18)),
+                  ],
+                )
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const Text("CPF:", style: TextStyle(fontSize: 18)),
+                    const SizedBox(width: 10),
+                    profileItem(
+                        snapshot.data!.cpf, const TextStyle(fontSize: 18)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text("CNPJ:", style: TextStyle(fontSize: 18)),
+                    const SizedBox(width: 10),
+                    profileItem(
+                        snapshot.data!.cnpj, const TextStyle(fontSize: 18)),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Telefone:", style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 10),
+                profileItem(snapshot.data!.phone, const TextStyle(fontSize: 18)),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Celular:", style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 10),
+                profileItem(
+                    snapshot.data!.cellPhone, const TextStyle(fontSize: 18)),
+              ],
+            ),
+            profileItem(snapshot.data!.address, const TextStyle(fontSize: 18)),
+            profileItem(snapshot.data!.number, const TextStyle(fontSize: 18)),
+            profileItem(snapshot.data!.district, const TextStyle(fontSize: 18)),
+            profileItem(snapshot.data!.city, const TextStyle(fontSize: 18)),
+            profileItem(snapshot.data!.state, const TextStyle(fontSize: 18)),
+            profileItem(snapshot.data!.cep, const TextStyle(fontSize: 18)),*/
+          ],
+        ),
+                
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-          profileItem(snapshot.data!.nome, const TextStyle(fontSize: 20)),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Text("Segmento:", style: TextStyle(fontSize: 18)),
-                  const SizedBox(width: 10),
-                  profileItem(
-                      snapshot.data!.segment, const TextStyle(fontSize: 18)),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text("Tipo:", style: TextStyle(fontSize: 18)),
-                  const SizedBox(width: 10),
-                  profileItem(
-                      snapshot.data!.type, const TextStyle(fontSize: 18)),
-                ],
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  const Text("CPF:", style: TextStyle(fontSize: 18)),
-                  const SizedBox(width: 10),
-                  profileItem(
-                      snapshot.data!.cpf, const TextStyle(fontSize: 18)),
-                ],
-              ),
-              Row(
-                children: [
-                  const Text("CNPJ:", style: TextStyle(fontSize: 18)),
-                  const SizedBox(width: 10),
-                  profileItem(
-                      snapshot.data!.cnpj, const TextStyle(fontSize: 18)),
-                ],
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Telefone:", style: TextStyle(fontSize: 18)),
-              const SizedBox(width: 10),
-              profileItem(snapshot.data!.phone, const TextStyle(fontSize: 18)),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text("Celular:", style: TextStyle(fontSize: 18)),
-              const SizedBox(width: 10),
-              profileItem(
-                  snapshot.data!.cellPhone, const TextStyle(fontSize: 18)),
-            ],
-          ),
-          profileItem(snapshot.data!.address, const TextStyle(fontSize: 18)),
-          profileItem(snapshot.data!.number, const TextStyle(fontSize: 18)),
-          profileItem(snapshot.data!.district, const TextStyle(fontSize: 18)),
-          profileItem(snapshot.data!.city, const TextStyle(fontSize: 18)),
-          profileItem(snapshot.data!.state, const TextStyle(fontSize: 18)),
-          profileItem(snapshot.data!.cep, const TextStyle(fontSize: 18))
-        ],
-      ),
+            
+          ]
+        )
+      )
     );
   }
 

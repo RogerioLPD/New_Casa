@@ -7,7 +7,7 @@ class AcquisitionsItem {
   AcquisitionsItem.fromJson(Map<String, dynamic> json) {
     valor = json['valor'];
     empresa =
-    json['empresa'] != null ? Enterprise.fromJson(json['empresa']) : null;
+        json['empresa'] != null ? Enterprise.fromJson(json['empresa']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,28 +21,22 @@ class AcquisitionsItem {
 }
 
 class Enterprise {
-  String? photo;
-  String? firstName;
-  String? lastName;
-  String? email;
+  int? id;
+  String? name;
   String? type;
 
-  Enterprise({this.photo, this.firstName, this.lastName, this.email, this.type});
+  Enterprise({this.id, this.name, this.type});
 
   Enterprise.fromJson(Map<String, dynamic> json) {
-    photo = json['foto'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    email = json['email'];
+    id = json['id'];
+    name = json['nome'];
     type = json['tipo'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['foto'] = photo;
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['email'] = email;
+    data['id'] = id;
+    data['nome'] = name;
     data['tipo'] = type;
     return data;
   }

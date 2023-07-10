@@ -175,7 +175,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
 
   bodyForMobile(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50),
+      padding: const EdgeInsets.only(top: 100),
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -275,9 +275,9 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
               ),
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
+         // const SizedBox(
+            //height: 5,
+         // ),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),

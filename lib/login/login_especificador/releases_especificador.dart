@@ -62,11 +62,11 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                     minWidth: 350.0,
                   ),
                   child: Text(
-                    "Nome".toUpperCase(),
+                    "Empresa".toUpperCase(),
                     style: CustomTextStyles.bold,
                   ),
                 ),
-                Container(
+                /*Container(
                   constraints: const BoxConstraints(
                     minWidth: 350.0,
                   ),
@@ -74,7 +74,7 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                     "Empresa".toUpperCase(),
                     style: CustomTextStyles.bold,
                   ),
-                )
+                )*/
               ],
             ),
           ),
@@ -105,20 +105,20 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                                       minWidth: 350.0,
                                     ),
                                     child: Text(
-                                      snapshot.data![index].empresa!.firstName ??
+                                      snapshot.data![index].empresa!.name ??
                                           "No data",
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
                                   //Text(snapshot.data![index].empresa!.firstName ?? "No data",textAlign: TextAlign.right),
-                                  Container(
+                                  /*Container(
                                     constraints: const BoxConstraints(
                                       minWidth: 350.0,
                                     ),
                                     child: Text(
                                         snapshot.data![index].empresa!.type ??
                                             "No data"),
-                                  )
+                                  )*/
                                 ],
                               );
                             }),
@@ -142,11 +142,12 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Valor".toUpperCase(), style: CustomTextStyles.bold),
-                  Text("Nome".toUpperCase(), style: CustomTextStyles.bold),
                   Text("Empresa".toUpperCase(), style: CustomTextStyles.bold),
+                 // Text("Empresa".toUpperCase(), style: CustomTextStyles.bold),
                 ],
               ),
             ),
+          
             const SizedBox(
               height: 10,
             ),
@@ -163,6 +164,7 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    
                                     Container(
                                         constraints: const BoxConstraints(
                                           minWidth: 40.0,
@@ -178,24 +180,30 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                                         ),
                                         child: Text(
                                             snapshot.data![index].empresa!
-                                                    .firstName ??
+                                                    .name ??
                                                 "No data",
                                             textAlign: TextAlign.right)),
+                                            
                                     //Text(snapshot.data![index].empresa!.firstName ?? "No data",textAlign: TextAlign.right),
-                                    Container(
+                                   /* Container(
                                       constraints: const BoxConstraints(
                                         minWidth: 40.0,
                                       ),
                                       child: Text(
                                           snapshot.data![index].empresa!.type ??
                                               "No data"),
-                                    )
+                                    )*/
                                   ],
+                                  
                                 );
+                               
                               }),
+                              
                         )
                       : const CircularProgressIndicator();
-                })
+                      
+                }),
+                
           ],
         ),
       ),
