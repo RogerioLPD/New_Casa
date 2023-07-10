@@ -44,7 +44,8 @@ class SpecifierController {
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         if (json.decode(response.body) != []) {
-          item = (json.decode(response.body) as List)
+          jsonDecode(utf8.decode(response.bodyBytes));
+          item = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
               .map((data) => AcquisitionsItem.fromJson(data))
               .toList();
           int valueTotal = 0;
@@ -82,7 +83,8 @@ class SpecifierController {
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         if (json.decode(response.body) != []) {
-          item = UserDetails.fromJson(json.decode(response.body));
+          jsonDecode(utf8.decode(response.bodyBytes));
+          item = UserDetails.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
 
           userController.sink.add(item);
           int valueTotal = 0;

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +25,10 @@ class ReleasesController {
     try {
       var response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 201) {
+         if (json.decode(response.body) != []) {
+          jsonDecode(utf8.decode(response.bodyBytes));
         return true;
+         }
       } else {
         return false;
       }

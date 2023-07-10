@@ -45,6 +45,7 @@ class EnterpriseController {
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         if (json.decode(response.body) != null) {
+          jsonDecode(utf8.decode(response.bodyBytes));
           item = (json.decode(mockData()) as List)
               .map((data) => EnterpriseItem.fromJson(data))
               .toList();

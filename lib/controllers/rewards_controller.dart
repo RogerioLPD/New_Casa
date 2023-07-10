@@ -34,7 +34,8 @@ class RewardsController {
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         if (json.decode(response.body) != []) {
-          item = (json.decode(response.body) as List)
+          jsonDecode(utf8.decode(response.bodyBytes));
+          item = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
               .map((data) => ProductItem.fromJson(data))
               .toList();
           dataController.sink.add(item);
