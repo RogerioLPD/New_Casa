@@ -45,6 +45,9 @@ class _RewardsPageState extends State<RewardsPage> {
               StreamBuilder<List>(
                   stream: rewardsController.dataController.stream,
                   builder: (context, snapshot) {
+                    List sortedList = snapshot.data!;
+                    sortedList.sort((a, b) => b.amount.compareTo(a.amount)); // Ordena a lista com base no atributo 'pontos'
+
                     return snapshot.hasData
                         ? snapshot.data!.isEmpty
                             ? const Padding(
@@ -60,12 +63,12 @@ class _RewardsPageState extends State<RewardsPage> {
                                     iphone: GridView.builder(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: kPadding),
-                                      itemCount: snapshot.data!.length,
+                                      itemCount: sortedList.length,
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 1,
-                                        mainAxisSpacing: kPadding,
-                                        crossAxisSpacing: kPadding,
+                                        mainAxisSpacing: kPadding * 2, // Increase main axis spacing
+                                        crossAxisSpacing: kPadding * 2,
                                         childAspectRatio: 1,
                                       ),
                                       itemBuilder: (context, index) => Item(
@@ -73,14 +76,14 @@ class _RewardsPageState extends State<RewardsPage> {
                                             ResponsiveLayout.isIphone(context)
                                                 ? false
                                                 : index == 0,
-                                        item: snapshot.data![index],
+                                        item: sortedList[index],
                                         onPressed: () {},
                                       ),
                                     ),
                                     ipad: GridView.builder(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: kPadding),
-                                      itemCount: snapshot.data!.length,
+                                      itemCount: sortedList.length,
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
@@ -93,14 +96,14 @@ class _RewardsPageState extends State<RewardsPage> {
                                             ResponsiveLayout.isIphone(context)
                                                 ? false
                                                 : index == 0,
-                                        item: snapshot.data![index],
+                                        item: sortedList[index],
                                         onPressed: () {},
                                       ),
                                     ),
                                     macbook: GridView.builder(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: kPadding),
-                                      itemCount: snapshot.data!.length,
+                                      itemCount: sortedList.length,
                                       gridDelegate:
                                           const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
@@ -113,7 +116,7 @@ class _RewardsPageState extends State<RewardsPage> {
                                             ResponsiveLayout.isIphone(context)
                                                 ? false
                                                 : index == 0,
-                                        item: snapshot.data![index],
+                                        item: sortedList[index],
                                         onPressed: () {},
                                       ),
                                     ),

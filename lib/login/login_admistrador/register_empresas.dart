@@ -291,7 +291,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                         keyboardType: TextInputType.text,
                         controller: _enderecoController,
                         inputFormatters: [
-                          //LengthLimitingTextInputFormatter(20),
+                          LengthLimitingTextInputFormatter(120),
                           regexTextAnNumber
                         ],
                         decoration: const InputDecoration(

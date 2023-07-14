@@ -95,7 +95,7 @@ class EnterpriseController {
       },
       {
         "nome": "Dallak Home",
-        "descricao": "Loja especializada em decoração",
+        "descricao": "Pioneira no ramo de decoração de ambientes e utilidades, a Dallak Home, está no mercado há 22 anos. Contamos com mais de 50 fornecedores renomados, em destaque as seguintes marcas: Wolff, Strauss, Sant James,velas Voluspa, Copa&amp;Cia, Cristais Bohemia, quadrosArtimage, cachepôs Bella Art, cristais murano São Marcos,plantas e flores permanentes Brilhance, entre outros.",
         "imagem": "https://drive.google.com/uc?export=view&id=10S1n_nHbXgyUh3YgP3TqL4H_R4IglwTB",
         "cidade": "Guarapuava"
       },
@@ -108,55 +108,55 @@ class EnterpriseController {
       },
       {
         "nome": "Ferropar",
-        "descricao": "Ferro, aço telha termoacústica.",
+        "descricao": "A FERROPAR é uma empresa que atua em Guarapuava há 12 anos na Avenida Professor Pedro Carli, 4568, na Vila Carli e se consolidou como fabricante de telhas de aço e distrbuidora de ferro.Tem como objetivo trazer variedade de materiais, com diferentes opções de escolha na hora da obra, além disso, por ser fabricante tem flexibilidade nos modelos, tamanhos e cores na telha de aço, que pode ser usada tanto na cobertura, como em projetos arquitetônicos de fachadas, móveis e tudo que sua criatividade permitir.",
         "imagem": "https://drive.google.com/uc?export=view&id=1jFXgkh5K6PM6SIwPi4sGnkP6D6jE2WFc",
         "cidade": "Guarapuava"
       },
       {
         "nome": "Construtora Gutierrez",
         "descricao":
-            "Somos uma construtora Iratiense, com sede em Guarapuava. Atuamos no desenvolvimento e construção de empreendimentos imobiliários e industriais.",
+            "Construtora Gutierrez fundada em 2014 em Irati, buscando atender uma alta demanda industrial em Guarapuava, transferiu sua sede em 2017 e desde então atua na região. Especializada em obras de terraplanagem, pavimentação em asfalto e concreto armado, obras civis de infraestrutura, industrial e comercial.",
         "imagem": "https://drive.google.com/uc?export=view&id=16NDVoBkdQ11Gb1yU77rqtV9K41CslywP",
         "cidade": "Guarapuava"
       },
       {
         "nome": "HR Pisos",
         "descricao":
-            "Possuimos um amplo Show room de pisos em nossa loja. Faça-nos uma visita e conheça mais os produtos e serviços que oferecemos, temos certeza que aqui irá encontrar o piso perfeito para o seu ambiente.",
+            "A HR Pisos está presente no mercado de pisos laminados desde o ano 2000, oferecendo uma ampla variedade no segmento de pisos laminados, pisos vinílicos, rodapés de MDF e Poliestireno, persianas e grama sintética, trabalhando com diversas marcas nacionais e importadas.",
         "imagem": "https://drive.google.com/uc?export=view&id=1D0NtmcjADKnNG2Ivoa0_KCkaO8CAmH3V",
         "cidade": "Guarapuava"
       },
       {
         "nome": "Kazza acabamentos",
         "descricao":
-            "Loja especializada em materiais de construção e acabamentos",
+            "Inaugurada em setembro de 2019, a Kazza Acabamentos é uma loja exclusiva, com o melhor em acabamentos, marcas e modelos exclusivos que inspiraram boas ideias.Nosso Objetivo com o Núcleo é Estreitar ainda mais as Parcerias com os Arquitetos. Estamos com Diversas Marcas Exclusivas como: Kohler, Castelatto, Asper, Zen Puxadores, Derosso,Rubinettos, Vesta, Doka E Também com as Diversas Marcas Renomadas do Mercado Portinari, Porcelanosa, Roca, Ceusa, Delta, Deca, Docol, Durafloor, Quick Step, Jacuzzi, e muitas outras.",
         "imagem": "https://drive.google.com/uc?export=view&id=1qOnEN5RxtDPZIg7VjtDyXYEdmCVQVIFy",
         "cidade": "Guarapuava"
       },
       {
         "nome": "Montello",
         "descricao":
-            "Projetamos o ambiente dos seus sonhos, com fabricação própria dos móveis e a garantia de prazo e qualidade para você!",
+            "A Montello iniciou suas atividades há oito anos em Guarapuava, em agosto de 2015. Atualmente conta com um espaço de 1.400m², 39 colaboradores e um processo de produção próprio e totalmente automatizado. Além dos móveis que são 100% MDF, faz estruturas de ferros, portas de vidro e Portas Provençais em pintura lacca. Nossos principais parceiros: Duratex, Arauco, Guararapes, Berneck, Ferragens BLUM, Puxadores Zen, Alternativa Perfis, RomaLacca e Grupo GMAD.",
         "imagem": "https://drive.google.com/uc?export=view&id=1QpDyL9fSfE4lAOQEr8dCNfsWm8jEklh3",
         "cidade": "Guarapuava"
       },
       {
         "nome": "Raltec Energia Solar",
         "descricao":
-            "A Raltec desenvolve sistemas conectados a rede pública, permitindo a redução do consumo e do valor pago às distribuidoras. Além disso, a geração excedentepode ser comercializada com a rede.",
+            "Especializada em Energia Solar Fotovoltaica, conta com a Matriz em Guarapuava, filial administrativa em Mato Grosso e representantes comerciais atuantes nos estados do Rio Grande do Sul, Santa Catarina, Paraná, São Paulo e Distrito Federal. Atuante em todo o território nacional com mais de 400 usinas instaladas e monitoradas, com certificação 4 estrelas da WEG.",
         "imagem": "https://drive.google.com/uc?export=view&id=1s2EGIS5MNXZuSBYpYD0A4e1g__RgKpnA",
         "cidade": "Guarapuava"
       },
       {
         "nome": "Splash",
-        "descricao": "Splash Piscinas",
+        "descricao": "A Splash Piscinas faz parte da rede iGUi, a maior fabricante de piscinas em fibra de vidro do mundo. Com mais de 12 anos de mercado, a marca vende os modelos tradicionais de piscinas mantendo a tecnologia, e qualidade original dos produtos. Com isso, aliado a preços competitivos, a Splash cresceu rápido e se tornou a segunda marca mais vendida do Brasil no seu ramo.",
         "imagem": "https://drive.google.com/uc?export=view&id=1V4wTsIJ17-139zFBzSmJQtp5IpphHDxi",
         "cidade": "Guarapuava"
       },
       {
         "nome": "Vidrocor",
         "descricao":
-            "A Vidrocor é sinônimo de qualidade, resistência e beleza,Há mais de 8 anos no mercado trazendo o que há melhor e mais moderno do setor vidreiro.Nossas esquadrias possuem um excelente acabamento e são fabricadas sob medida para cada cliente, garantindo assim um resultado exclusivo e personalizado. Com atendimento personalizado, para entender melhor sua necessidade e projeto. Surpreenda-se com a qualidade e o bom atendimento.",
+            "A Vidrocor é uma empresa do ramo vidreiro que atua há mais de 10 anos no mercado, com a fabricação de Esquadria de alumínio, Portas em alumínio e ACM, Pele de vidro e Vidro temperado.",
         "imagem": "https://drive.google.com/uc?export=view&id=1YFxWaL3lsBc8hiR8Rt3Ogj7p_hreH99r",
         "cidade": "Guarapuava"
       }

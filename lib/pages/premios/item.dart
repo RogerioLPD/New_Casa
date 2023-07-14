@@ -1,8 +1,5 @@
-// ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:nucleo/kpadding.dart';
-
 import 'package:nucleo/pages/premios/viagem_item.dart';
 
 class Item extends StatelessWidget {
@@ -17,10 +14,12 @@ class Item extends StatelessWidget {
     this.selected = false,
   }) : super(key: key);
 
+  int selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      child: SingleChildScrollView(
+    return Scaffold(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -51,38 +50,34 @@ class Item extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(
+              height: kPadding / 2,
+            ),
             Text(
               "${item.amount}  Pontos",
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: kPadding / 2),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: kPadding / 4),
               child: Text(
                 item.title!,
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
-                  fontSize: 20,
-                ),
+                style:
+                    TextStyle(color: Colors.black.withOpacity(0.5), fontSize: 20),
               ),
             ),
-            const SizedBox(height: kPadding / 4),
-            Padding(
-              padding: const EdgeInsets.only(bottom: kPadding / 2),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: kPadding / 4),
               child: Text(
                 item.description!,
-                style: TextStyle(
-                  color: Colors.black.withOpacity(0.5),
-                ),
+                style: TextStyle(color: Colors.black.withOpacity(0.5)),
               ),
             ),
-            const SizedBox(height: kPadding ),
-            
+            const SizedBox(
+              height: kPadding / 2,
+            ),
           ],
         ),
       ),
     );
   }
 }
-
-

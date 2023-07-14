@@ -74,7 +74,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
              // mainAxisAlignment: MainAxisAlignment.center,
               //children: [
                 SizedBox(
-                    height: 250,
+                   height: 450,
                    width: double.infinity,
                   //child: Icon(Icons.account_circle_outlined, size: 150,),
                   child: CachedNetworkImage(
@@ -99,7 +99,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
                   ),
                 ),  
             Container(
-              margin: const EdgeInsets.fromLTRB(16.0, 200.0, 16.0, 16.0),
+              margin: const EdgeInsets.fromLTRB(16.0, 300.0, 16.0, 16.0),
               child: Column(
                 children: <Widget>[
                   Stack(
@@ -108,7 +108,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
                         padding: const EdgeInsets.all(16.0),
                         margin: const EdgeInsets.only(top: 16.0),
                         decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: const Color.fromARGB(234, 255, 255, 255),
                             borderRadius: BorderRadius.circular(5.0)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,13 +161,13 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
                         
                       
                       Container(
-                        height: 80,
-                        width: 80,
+                        height: 100,
+                        width: 100,
                         /*decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.0),
                             image: DecorationImage(
                                 image: NetworkImage(image), fit: BoxFit.cover)),*/
-                        margin: const EdgeInsets.only(left: 16.0),
+                        margin: const EdgeInsets.only(left: 8.0),
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
                     imageUrl: snapshot.data!.photo,
@@ -199,7 +199,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
                   Container(
                     
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color:const Color.fromARGB(234, 255, 255, 255),
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: Column(
@@ -248,7 +248,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
                         leading: const Icon(Icons.home_work, color: Colors.grey, size: 26),
                          title: const Text("Endereço", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                          subtitle: profileItem(snapshot.data!.address, const TextStyle(fontSize: 16)),
-                         trailing: profileItem(snapshot.data!.number, const TextStyle(fontSize: 16)),
+                         
                          ),
                         const Divider(),
                         ListTile(

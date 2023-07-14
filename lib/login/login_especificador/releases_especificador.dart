@@ -8,7 +8,7 @@ import 'package:nucleo/routes.dart';
 import 'package:nucleo/utils/custom_text_styles.dart';
 
 class ReleasesEspecificador extends StatefulWidget {
-  ReleasesEspecificador({super.key});
+  ReleasesEspecificador({Key? key}) : super(key: key);
 
   @override
   State<ReleasesEspecificador> createState() => _ReleasesEspecificadorState();
@@ -66,15 +66,6 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                     style: CustomTextStyles.bold,
                   ),
                 ),
-                /*Container(
-                  constraints: const BoxConstraints(
-                    minWidth: 350.0,
-                  ),
-                  child: Text(
-                    "Empresa".toUpperCase(),
-                    style: CustomTextStyles.bold,
-                  ),
-                )*/
               ],
             ),
           ),
@@ -87,123 +78,303 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                 return snapshot.hasData
                     ? Expanded(
                         child: ListView.builder(
-                            padding: customPadding,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (_, index) {
-                              return Row(
+                          padding: customPadding,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (_, index) {
+                            return Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                      constraints: const BoxConstraints(
-                                        minWidth: 380.0,
+                                    constraints: const BoxConstraints(
+                                      minWidth: 380.0,
+                                    ),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Text(
+                                      snapshot.data![index].valor ?? "No data",
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
                                       ),
-                                      child: Text(snapshot.data![index].valor ??
-                                          "No data")),
+                                    ),
+                                  ),
                                   Container(
                                     constraints: const BoxConstraints(
                                       minWidth: 350.0,
                                     ),
+                                    padding: const EdgeInsets.all(8),
                                     child: Text(
                                       snapshot.data![index].empresa!.name ??
                                           "No data",
                                       textAlign: TextAlign.left,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
-                                  //Text(snapshot.data![index].empresa!.firstName ?? "No data",textAlign: TextAlign.right),
-                                  /*Container(
-                                    constraints: const BoxConstraints(
-                                      minWidth: 350.0,
-                                    ),
-                                    child: Text(
-                                        snapshot.data![index].empresa!.type ??
-                                            "No data"),
-                                  )*/
                                 ],
-                              );
-                            }),
+                              ),
+                            );
+                          },
+                        ),
                       )
                     : const CircularProgressIndicator();
-              })
+              }),
         ],
       ),
     );
   }
 
   bodyForMobile() {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 50),
-        child: Column(
-          children: [
-            Container(
-              padding: customPadding,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Valor".toUpperCase(), style: CustomTextStyles.bold),
-                  Text("Empresa".toUpperCase(), style: CustomTextStyles.bold),
-                 // Text("Empresa".toUpperCase(), style: CustomTextStyles.bold),
-                ],
-              ),
-            ),
-          
-            const SizedBox(
-              height: 10,
-            ),
-            StreamBuilder<List<AcquisitionsItem>>(
-                stream: _controller.detailsController.stream,
-                builder: (_, snapshot) {
-                  return snapshot.hasData
-                      ? Expanded(
-                          child: ListView.builder(
-                              padding: customPadding,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (_, index) {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    
-                                    Container(
-                                        constraints: const BoxConstraints(
-                                          minWidth: 40.0,
-                                          maxWidth: 600.0,
-                                        ),
-                                        child: Text(
-                                            snapshot.data![index].valor ??
-                                                "No data")),
-                                    Container(
-                                        constraints: const BoxConstraints(
-                                          minWidth: 40.0,
-                                          maxWidth: 600.0,
-                                        ),
-                                        child: Text(
-                                            snapshot.data![index].empresa!
-                                                    .name ??
-                                                "No data",
-                                            textAlign: TextAlign.right)),
-                                            
-                                    //Text(snapshot.data![index].empresa!.firstName ?? "No data",textAlign: TextAlign.right),
-                                   /* Container(
-                                      constraints: const BoxConstraints(
-                                        minWidth: 40.0,
-                                      ),
-                                      child: Text(
-                                          snapshot.data![index].empresa!.type ??
-                                              "No data"),
-                                    )*/
-                                  ],
-                                  
-                                );
-                               
-                              }),
-                              
-                        )
-                      : const CircularProgressIndicator();
-                      
-                }),
+  return Scaffold(
+    body: Padding(
+      padding: const EdgeInsets.only(top: 100),
+      child: Column(
+        children: [
+          Container(
+            padding: customPadding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
                 
+                Text(
+                  "Extrato".toUpperCase(),
+                  style:const TextStyle(
+                                              //color: Color.fromARGB(255, 10, 22, 88),
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 20,
+                                            ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          StreamBuilder<List<AcquisitionsItem>>(
+            stream: _controller.detailsController.stream,
+            builder: (_, snapshot) {
+              return snapshot.hasData
+                  ? Expanded(
+                      child: ListView.builder(
+                        padding: customPadding,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (_, index) {
+                          final item = snapshot.data![index];
+                          return Card(
+                            elevation: 4,
+                            child: Row(
+                              children: <Widget>[
+                                Container(
+                                  height: 130,
+                                  width: 80,
+                                  padding: const EdgeInsets.only(
+                                      left: 8, top: 50, bottom: 8, right: 8),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const <Widget>[
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color.fromARGB(255, 10, 22, 88),
+                                        size: 25,
+                                      ),
+                                      
+                                       
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                     Container(
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 150.0,
+                                      ),
+                                      padding: const EdgeInsets.all(8),
+                                       child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            item.empresa!.name ?? "No data",
+                                            style: const TextStyle(
+                                              color: Colors.deepOrange,
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 17,
+                                            ),
+                                          ),
+                                          
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Row(
+                                            children: const <Widget>[
+                                              Icon(
+                                                Icons.star,
+                                                color: Color.fromARGB(255, 10, 22, 88),
+                                                size: 18,
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: Color.fromARGB(255, 10, 22, 88),
+                                                size: 18,
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: Color.fromARGB(255, 10, 22, 88),
+                                                size: 18,
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: Color.fromARGB(255, 10, 22, 88),
+                                                size: 18,
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: Color.fromARGB(255, 10, 22, 88),
+                                                size: 18,
+                                              ),
+                                            ],
+                                          ),
+                                         
+                                        ],
+                                                                         ),
+                                     ),
+                                     const SizedBox(width: 40,),
+                                   
+                                       Container(
+                                        constraints: const BoxConstraints(
+                                          
+                                          maxWidth: 100,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        
+                                        child: Row(
+                                          children:[
+                                           Text(
+                                            snapshot.data![index].valor ?? "No data",
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 2,),
+                                          const Text(
+                                             "Pts",
+                                            style: TextStyle(
+                                              color: Colors.deepOrange,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          ],
+                                        ),
+                                      ),
+                                    
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        
+                      
+                    
+                        
+                    
+
+                             /*Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                //borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 2,
+                                    blurRadius: 6,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: SizedBox(
+                                height: 100,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      constraints: const BoxConstraints(
+                                       maxWidth: 0.5,
+                                      ),
+                                      padding: const EdgeInsets.only(left:8),
+                                      child: const Icon(Icons.arrow_right
+                                        
+                                      ),
+                                    ),
+                                    const SizedBox(width: 30,),
+                                    Container(
+                                      
+                                      constraints: const BoxConstraints(
+                                        maxWidth: 150.0,
+                                      ),
+                                      padding: const EdgeInsets.all(8),
+                                      child: Text(
+                                        snapshot.data![index].empresa!.name ??
+                                            "No data",
+                                        textAlign: TextAlign.left,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w700,
+                                        ),
+                                      ),
+                                    ),
+                                     const SizedBox(width: 100,),
+                                     Expanded(
+                                      child: Container(
+                                        constraints: const BoxConstraints(
+                                          minWidth: 40.0,
+                                          maxWidth: 600.0,
+                                        ),
+                                        padding: const EdgeInsets.all(8),
+                                        child: Text(
+                                          snapshot.data![index].valor ?? "No data",
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );*/
+                          },
+                        ),
+                      )
+                    : const CircularProgressIndicator();
+              },
+            ),
           ],
         ),
       ),

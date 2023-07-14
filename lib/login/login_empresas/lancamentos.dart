@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:intl/intl.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,13 +32,13 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
     super.dispose();
   }
 
-  void calcularPontos() {
-    final valorVendas = double.tryParse(valorVendasController.text) ?? 0;
-    final valorPontos = valorVendas / 1;
-    valorPontosController.sink.add(valorPontos.toStringAsFixed(0));
-    valorPontosControllerText = valorPontos.toStringAsFixed(0);
+   void calcularPontos() {
+    final valorVendas = NumberFormat.currency(locale: 'pt_BR').parse(valorVendasController.text).toDouble();
+    final valorPontos = valorVendas / 1000;
+    final valorPontosFormatado = NumberFormat.compact(locale: 'pt_BR').format(valorPontos);
+    valorPontosController.sink.add(valorPontosFormatado);
+    valorPontosControllerText = valorPontosFormatado;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -244,7 +244,7 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
                         if (response) {
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacementNamed(
-                              context, Routes.homeespecificador);
+                              context, Routes.lancamentos);
                         } else {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(

@@ -76,10 +76,10 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(150),
-        child: MenuBar1(),
-      ),
+     // appBar: const PreferredSize(
+      //  preferredSize: Size.fromHeight(150),
+        //child: MenuBar1(),
+    //  ),
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -282,11 +282,12 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                     return null;
                   },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
+                //Row(
+                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 // children: [
+                   // Expanded(
+                    //  child: 
+                    TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _enderecoController,
                         inputFormatters: [
@@ -308,13 +309,14 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                           return null;
                         },
                       ),
-                    ),
+                  //  ),
                     const SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      width: 100,
-                      child: TextFormField(
+                    //SizedBox(
+                    //  width: 100,
+                    //  child:
+                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _numeroController,
                         inputFormatters: [
@@ -336,13 +338,14 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                           return null;
                         },
                       ),
-                    ),
+                    //),
                     const SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      width: 250,
-                      child: TextFormField(
+                    //SizedBox(
+                    //  width: 250,
+                     // child:
+                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _bairroController,
                         inputFormatters: [
@@ -364,13 +367,14 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                           return null;
                         },
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
+                   // ),
+                //  ],
+               // ),
+               // Row(
+                //  children: [
+                  //  Expanded(
+                    //  child: 
+                      TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _cidadeController,
                         inputFormatters: [
@@ -392,12 +396,13 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                           return null;
                         },
                       ),
-                    ),
+                   // ),
                     const SizedBox(
                       width: 10,
                     ),
-                    Expanded(
-                      child: TextFormField(
+                  //  Expanded(
+                  //    child:
+                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _estadoController,
                         inputFormatters: [
@@ -419,9 +424,9 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                           return null;
                         },
                       ),
-                    ),
-                  ],
-                ),
+                   // ),
+                 // ],
+                //),
                 const SizedBox(
                   height: 40,
                 ),

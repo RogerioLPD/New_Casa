@@ -181,7 +181,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 15),
             child: SizedBox(
               height: 250,
               child: Container(
@@ -280,7 +280,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
          // ),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: GridView(
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -368,6 +368,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
               ),
             ),
           ),
+        
           ActionChip(
               label: const Text("Logout"),
               onPressed: () {
