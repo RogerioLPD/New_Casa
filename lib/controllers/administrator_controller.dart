@@ -115,21 +115,18 @@ class AdministradorController {
       bairro,
       cidade,
       estado,
-      Uint8List? bytes}) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String token = sharedPreferences.getString('token')!;
+      Uint8List? bytes
+      }) async {
+
     String image = base64.encode(bytes!);
     var url = Uri.parse("https://apicasadecor.com/api/cadastro/especificador/");
-    Map<String, String> headers = {
-      'Authorization': "Token $token",
-    };
+   
     Map<String, dynamic> body = {
       "foto": image,
       "nome": name,
       "email": email,
       "password": password,
       "cpf": cpf,
-      "tipo": "ESPECIFICADOR",
       "seguimento": seguimento,
       "telefone": telefone,
       "celular": celular,
@@ -141,7 +138,7 @@ class AdministradorController {
     };
 
     try {
-      var response = await http.post(url, headers: headers,  body: body);
+      var response = await http.post(url, body: body);
       if (response.statusCode == 201) {
         if (kDebugMode) {
           print(response.body);
