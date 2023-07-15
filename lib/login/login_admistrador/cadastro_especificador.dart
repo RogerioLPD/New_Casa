@@ -1,4 +1,6 @@
 import 'dart:developer';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:file_picker/file_picker.dart';
@@ -38,6 +40,8 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   final _senhaController = TextEditingController();
   final _senhaCController = TextEditingController();
   bool visivelSenha = true;
+  Uint8List? _selectedBytes;
+  PlatformFile? _imageFile;
   bool visivelCSenha = true;
   List<PlatformFile>? _paths;
 
@@ -46,20 +50,27 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   var regexNumberOnly = FilteringTextInputFormatter.allow(RegExp(r'[0-9]'));
 
   void pickFiles() async {
-    try {
-      _paths = (await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowMultiple: false,
-        onFileLoading: (FilePickerStatus status) => print(status),
-        allowedExtensions: ['png', 'jpg', 'jpeg', 'heic'],
-      ))
-          ?.files;
-    } on PlatformException catch (e) {
-      log('Unsupported operation' + e.toString());
-    } catch (e) {
-      log(e.toString());
+  try {
+    _imageFile = (await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowMultiple: false,
+      onFileLoading: (FilePickerStatus status) => print(status),
+      allowedExtensions: ['png', 'jpg', 'jpeg', 'heic'],
+    ))?.files.first;
+    
+    if (_imageFile != null) {
+      File file = File(_imageFile!.path!);
+      _selectedBytes = await file.readAsBytes();
     }
+  } on PlatformException catch (e) {
+    log('Unsupported operation' + e.toString());
+  } catch (e) {
+    log(e.toString());
   }
+}
+
+
+
 
   void verSenha() {
     setState(() {
@@ -291,11 +302,11 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                         keyboardType: TextInputType.text,
                         controller: _enderecoController,
                         inputFormatters: [
-                          //LengthLimitingTextInputFormatter(20),
+                          LengthLimitingTextInputFormatter(20),
                           regexTextAnNumber
                         ],
                         decoration: const InputDecoration(
-                          hintText: 'Endereço',
+                          hintText: 'Endereço - Não digitar mais de 20 carácteres!',
                           hintStyle:
                               TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
@@ -349,7 +360,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                         keyboardType: TextInputType.text,
                         controller: _bairroController,
                         inputFormatters: [
-                          //LengthLimitingTextInputFormatter(20),
+                          LengthLimitingTextInputFormatter(20),
                           regexTextAnNumber
                         ],
                         decoration: const InputDecoration(
@@ -431,48 +442,55 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                   height: 40,
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
-                  child: MaterialButton(
-                    padding: const EdgeInsets.symmetric(horizontal: 6),
-                    elevation: 0,
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        bool cadastro = await _controller.createSpecified(
-                          name: _nomeController.text,
-                          cpf: _cpfController.text.trim(),
-                          seguimento: _seguimentoController.text,
-                          telefone: _telefoneController.text,
-                          celular: _celularController.text,
-                          email: _emailController.text,
-                          endereco: _enderecoController.text,
-                          numero: _numeroController.text,
-                          bairro: _bairroController.text,
-                          cidade: _cidadeController.text,
-                          estado: _estadoController.text,
-                          password: _senhaController.text,
-                          bytes: _paths!.first.bytes,
-                        );
-                        if (cadastro) {
-                          // ignore: use_build_context_synchronously
-                          Navigator.pushNamedAndRemoveUntil(context, Routes.cadastroespecificador, (route) => false);
-                        } else {
-                          // ignore: use_build_context_synchronously
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text('Erro ao fazer cadastro')),
-                          );
-                        }
-                      }
-                    },
-                    child: Text(
-                      'REGISTRAR',
-                      style: GoogleFonts.montserrat(
-                          color: textPrimary,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 18),
-                    ),
-                  ),
-                ),
+  alignment: Alignment.bottomCenter,
+  child: MaterialButton(
+    padding: const EdgeInsets.symmetric(horizontal: 6),
+    elevation: 0,
+    onPressed: () async {
+      if (_formKey.currentState!.validate()) {
+        if (_selectedBytes == null) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Selecione uma imagem')),
+          );
+          return;
+        }
+        
+        bool cadastro = await _controller.createSpecified(
+          name: _nomeController.text,
+          cpf: _cpfController.text.trim(),
+          seguimento: _seguimentoController.text,
+          telefone: _telefoneController.text,
+          celular: _celularController.text,
+          email: _emailController.text,
+          endereco: _enderecoController.text,
+          numero: _numeroController.text,
+          bairro: _bairroController.text,
+          cidade: _cidadeController.text,
+          estado: _estadoController.text,
+          password: _senhaController.text,
+          bytes: _selectedBytes,
+        );
+
+        if (cadastro) {
+          Navigator.pushNamedAndRemoveUntil(
+            context, Routes.cadastroespecificador, (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Erro ao fazer cadastro')),
+          );
+        }
+      }
+    },
+    child: Text(
+      'REGISTRAR',
+      style: GoogleFonts.montserrat(
+        color: textPrimary,
+        fontWeight: FontWeight.w700,
+        fontSize: 18),
+    ),
+  ),
+),
+
                 const SizedBox(
                   height: 60,
                 ),

@@ -102,54 +102,59 @@ class AdministradorController {
     }
   }
 
-  Future createSpecified(
-      {String? name,
-      email,
-      password,
-      cpf,
-      seguimento,
-      telefone,
-      celular,
-      endereco,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      Uint8List? bytes
-      }) async {
+  Future createSpecified({
+  String? name,
+  email,
+  password,
+  cpf,
+  seguimento,
+  telefone,
+  celular,
+  endereco,
+  numero,
+  bairro,
+  cidade,
+  estado,
+  Uint8List? bytes,
+}) async {
+  if (bytes == null) {
+    throw ArgumentError('A imagem é obrigatória');
+  }
 
-    String image = base64.encode(bytes!);
-    var url = Uri.parse("https://apicasadecor.com/api/cadastro/especificador/");
-   
-    Map<String, dynamic> body = {
-      "foto": image,
-      "nome": name,
-      "email": email,
-      "password": password,
-      "cpf": cpf,
-      "seguimento": seguimento,
-      "telefone": telefone,
-      "celular": celular,
-      "endereco": endereco,
-      "numero": numero,
-      "bairro": bairro,
-      "cidade": cidade,
-      "estado": estado
-    };
+  String image = base64.encode(bytes);
 
-    try {
-      var response = await http.post(url, body: body);
-      if (response.statusCode == 201) {
-        if (kDebugMode) {
-          print(response.body);
-        }
-        return true;
-      } else {
-        return false;
+  var url = Uri.parse("https://apicasadecor.com/api/cadastro/especificador/");
+
+  Map<String, dynamic> body = {
+    "foto": image,
+    "nome": name,
+    "email": email,
+    "password": password,
+    "cpf": cpf,
+    "seguimento": seguimento,
+    "telefone": telefone,
+    "celular": celular,
+    "endereco": endereco,
+    "numero": numero,
+    "bairro": bairro,
+    "cidade": cidade,
+    "estado": estado
+  };
+
+  try {
+    var response = await http.post(url, body: body);
+    if (response.statusCode == 201) {
+      if (kDebugMode) {
+        print(response.body);
       }
-    } catch (e) {
-      log(e.toString());
+      return true;
+    } else {
       return false;
     }
+  } catch (e) {
+    log(e.toString());
+    return false;
   }
+}
+
 }

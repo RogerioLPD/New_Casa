@@ -177,14 +177,14 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                         itemBuilder: (_, index) {
                           final item = snapshot.data![index];
                           return Card(
-                            elevation: 4,
+                            elevation: 3,
                             child: Row(
                               children: <Widget>[
                                 Container(
-                                  height: 130,
-                                  width: 80,
+                                  height: 160,
+                                  width: 70,
                                   padding: const EdgeInsets.only(
-                                      left: 8, top: 50, bottom: 8, right: 8),
+                                       top: 65, ),
                                   decoration: const BoxDecoration(
                                     color: Colors.white,
                                   ),
@@ -260,7 +260,7 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                                         ],
                                                                          ),
                                      ),
-                                     const SizedBox(width: 40,),
+                                     const SizedBox(width: 50,),
                                    
                                        Container(
                                         constraints: const BoxConstraints(
@@ -278,7 +278,7 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          const SizedBox(width: 2,),
+                                          const SizedBox(width: 4,),
                                           const Text(
                                              "Pts",
                                             style: TextStyle(

@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+10
+version: 1.0.0+12
 
 environment:
   sdk: ">=2.17.3 <3.0.0"
@@ -84,25 +84,25 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/casa.png"
+  image_path: "assets/images/LogoApp.jpg"
   min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/casa.png"
+    image_path: "assets/images/LogoApp.jpg"
     background_color: "#hexcode"
     theme_color: "#hexcode"
   windows:
     generate: true
-    image_path: "assets/images/casa.png"
+    image_path: "assets/images/LogoApp.jpg"
     icon_size: 48 # min:48, max:256, default: 48
   macos:
     generate: true
-    image_path: "assets/images/casa.png"
+    image_path: "assets/images/LogoApp.jpg"
 
 
 flutter_native_splash:
   color: "#ffffff"
-  image: "assets/images/casa.png"
+  image: "assets/images/LogoApp.jpg"
 
 
 # For information on the generic Dart part of this file, see the
