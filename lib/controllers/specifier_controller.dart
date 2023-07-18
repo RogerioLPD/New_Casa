@@ -13,13 +13,20 @@ import 'package:http/http.dart' as http;
 class SpecifierController {
   final StreamController<List<AcquisitionsItem>> detailsController =
       StreamController.broadcast();
-  final StreamController<int> pointsController = StreamController.broadcast();
+  final StreamController<double> pointsController = StreamController.broadcast();
   final StreamController<UserDetails> userController =
       StreamController.broadcast();
 
   final PageController pageController = PageController(initialPage: 0);
+
   SpecifierController() {
     initValues();
+  }
+
+  void dispose() {
+    detailsController.close();
+    pointsController.close();
+    userController.close();
   }
 
   initValues() async {
@@ -27,38 +34,35 @@ class SpecifierController {
     await getGetUser();
   }
 
-  getData() async {
+  Future<void> getData() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String token = sharedPreferences.getString('token')!;
+    String? token = sharedPreferences.getString('token');
     var url = Uri.https("apicasadecor.com", "/api/compras/especificador/");
     Map<String, String> headers = {
       'Authorization': "Token $token",
       'content-type': 'application/json',
     };
     List<AcquisitionsItem> item = [];
-    // Map<String, dynamic> body = {
-    //   "username": _emailController.text,
-    //   "password": _senhaController.text,
-    // };
     try {
       var response = await http.get(url, headers: headers);
+      print('Response ${response.body}');
       if (response.statusCode == 200) {
         if (json.decode(response.body) != []) {
           jsonDecode(utf8.decode(response.bodyBytes));
+
           item = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
               .map((data) => AcquisitionsItem.fromJson(data))
               .toList();
-          int valueTotal = 0;
+          double valueTotal = 0;
           for (AcquisitionsItem data in item) {
-            int value = int.parse(data.valor!);
-            valueTotal = valueTotal + value;
+            double value = double.parse(data.valor!);
+            print(data);
+            valueTotal += value;
           }
+
           print(valueTotal);
-          pointsController.sink.add(valueTotal);
+          pointsController.sink.add(valueTotal); // Não arredonda o valor
           detailsController.sink.add(item);
-          // if (kDebugMode) {
-          //   print(response.body);
-          // }
         }
       } else {}
     } catch (e) {
@@ -75,22 +79,17 @@ class SpecifierController {
       'content-type': 'application/json',
     };
     UserDetails item;
-    // Map<String, dynamic> body = {
-    //   "username": _emailController.text,
-    //   "password": _senhaController.text,
-    // };
     try {
       var response = await http.get(url, headers: headers);
+      print('Response ${response.body}');
       if (response.statusCode == 200) {
         if (json.decode(response.body) != []) {
           jsonDecode(utf8.decode(response.bodyBytes));
-          item = UserDetails.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+          item = UserDetails.fromJson(
+              jsonDecode(utf8.decode(response.bodyBytes)));
 
           userController.sink.add(item);
           int valueTotal = 0;
-          // if (kDebugMode) {
-          //   print(response.body);
-          // }
         }
       } else {}
     } catch (e) {

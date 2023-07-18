@@ -506,7 +506,7 @@ class MenuBar1State extends State<MenuBar1> {
         ),
       ),
       TextButton(
-        onPressed: () {},
+        onPressed: () {Navigator.pushReplacementNamed(context, Routes.web);},
         style: menuButtonStyle,
         child: const Text(
           "CONTATO",

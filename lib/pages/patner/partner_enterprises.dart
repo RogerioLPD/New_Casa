@@ -45,7 +45,7 @@ class _PartnerEnterprisesState extends State<PartnerEnterprises> {
               kIsWeb
                   ? Container(
                       margin: const EdgeInsets.symmetric(horizontal: 32),
-                      child: const MenuBar1(),
+                      //child: const MenuBar1(),
                     )
                   : Container(),
               StreamBuilder<List<String>>(

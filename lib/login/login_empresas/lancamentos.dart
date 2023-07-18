@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nucleo/components/components.dart';
+import 'package:nucleo/controllers/authenticator_controller.dart';
 import 'package:nucleo/controllers/releases_controller.dart';
 import 'package:nucleo/routes.dart';
 
@@ -23,6 +24,7 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
   final nomeEstabelecimentoController = TextEditingController();
   final especificadorController = TextEditingController();
   String valorPontosControllerText = "";
+  final AuthenticationController _authController = AuthenticationController();
 
   @override
   void dispose() {
@@ -32,15 +34,24 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
     super.dispose();
   }
 
-   void calcularPontos() {
-    final valorVendas = NumberFormat.currency(locale: 'pt_BR').parse(valorVendasController.text).toDouble();
-    final valorPontos = valorVendas / 1000;
-    final valorPontosFormatado = NumberFormat.compact(locale: 'pt_BR').format(valorPontos);
-    valorPontosController.sink.add(valorPontosFormatado);
-    valorPontosControllerText = valorPontosFormatado;
-  }
+  void calcularPontos() {
+  final valorVendas = NumberFormat.currency(locale: 'pt_BR').parse(valorVendasController.text).toDouble();
+  final valorPontos = valorVendas / 1000;
+  final valorPontosFormatado = NumberFormat.compact(locale: 'pt_BR').format(valorPontos);
+
+  // Substitua a vírgula por ponto
+  final valorPontosFormatadoPonto = valorPontosFormatado.replaceAll(',', '.');
+
+  valorPontosController.sink.add(valorPontosFormatadoPonto);
+  valorPontosControllerText = valorPontosFormatadoPonto;
+}
+
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder<bool>(
+      stream: _authController.loginCheckLoading.stream,
+      builder: (context, snapshot) {
+        if (snapshot.hasData && snapshot.data!) {
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
@@ -318,5 +329,20 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
       ),
       backgroundColor: Colors.white,
     );
+     } else {
+      
+      return Scaffold(
+    body: Center(
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, Routes.registerempresas);
+        },
+        child: Text('Registrar como empresa'),
+      ),
+    ),
+  );
+    }
+  },
+);
   }
 }

@@ -112,7 +112,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                   height: 40,
                 ),
                 TextButton(
-                  child: const Text('Iserir Foto'),
+                  child: const Text('Inserir Foto'),
                   onPressed: () async {
                     pickFiles();
                   },

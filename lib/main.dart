@@ -109,6 +109,7 @@ class MyApp extends StatelessWidget {
               return const MenuSide();
             case Routes.lancamentos:
               return const HomeEmpresas();
+              
 
             default:
               return const SizedBox.shrink();

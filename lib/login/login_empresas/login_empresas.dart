@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_interpolation_to_compose_strings
-
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -68,7 +66,8 @@ class _LoginViewState extends State<LoginView> {
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
-          Navigator.pushNamedAndRemoveUntil(context, Routes.home, (Route<dynamic> route) => false);
+          Navigator.pushNamedAndRemoveUntil(
+              context, Routes.home, (Route<dynamic> route) => false);
           return true;
         },
         child: Center(
@@ -187,8 +186,7 @@ class _LoginViewState extends State<LoginView> {
                                         _senhaController.text);
                                     if (logout) {
                                       // ignore: use_build_context_synchronously
-                                      Navigator.pushReplacementNamed(
-                                          context, Routes.homeempresas);
+                                      getUserData();
                                     } else {
                                       // ignore: use_build_context_synchronously
                                       ScaffoldMessenger.of(context)
@@ -241,8 +239,9 @@ class _LoginViewState extends State<LoginView> {
                     child: MaterialButton(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       elevation: 0,
-                      onPressed: () =>
-                          Navigator.pushNamed(context, Routes.home),
+                                            onPressed: () {
+                        Navigator.pushNamed(context, Routes.home);
+                      },
                       child: Text(
                         'VOLTAR',
                         style: GoogleFonts.montserrat(
@@ -264,7 +263,7 @@ class _LoginViewState extends State<LoginView> {
 
   fazerLogin() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var url = Uri.parse('');
+    var url = Uri.parse('https://apicasadecor.com/api/login');
 
     Map<String, dynamic> body = {
       'username': _emailController.text,
@@ -288,4 +287,34 @@ class _LoginViewState extends State<LoginView> {
       return false;
     }
   }
+
+ getUserData() async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  String? token = sharedPreferences.getString('token');
+  if (token != null) {
+    var url = Uri.parse('https://apicasadecor.com/api/usuario/1');
+    var response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json', // Defina o Content-Type como application/json
+      },
+    );
+    print('Response ${response.body}');
+    if (response.statusCode == 200) {
+      var userData = jsonDecode(response.body);
+      String userType = userData['tipo'];
+      print('Tipo $userType');
+      if (userType == 'EMPRESA') {
+        Navigator.pushReplacementNamed(context, Routes.homeempresas);
+      } else if (userType == 'ESPECIFICADOR') {
+        Navigator.pushNamed(context, Routes.registerempresas);
+      } else {
+        Navigator.pushNamed(context, Routes.loginview);
+      }
+    }
+  }
 }
+
+}
+

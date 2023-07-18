@@ -30,6 +30,7 @@ class Routes {
   static const String lancamentos = "lancamentos";
    static const String newlogin = "newlogin";
    static const String company = "company";
+  
 
   static Route<T> fadeThrough<T>(RouteSettings settings, WidgetBuilder page,
       {int duration = 300}) {

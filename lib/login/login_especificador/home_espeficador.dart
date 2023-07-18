@@ -25,6 +25,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
   bool isRewardsSelected = false;
   bool isEnterprisesSelected = false;
   bool isProfileSelected = false;
+  
 
   @override
   void initState() {
@@ -206,7 +207,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                         ),
                       ),
                     ),
-                    StreamBuilder<int>(
+                    StreamBuilder<double>(
                         stream: _controller.pointsController.stream,
                         builder: (context, snapshot) {
                           return snapshot.hasData
@@ -216,7 +217,10 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                                     SizedBox(
                                       height: 120,
                                       child: Text(
-                                        snapshot.data!.toString(),
+                                       /*double.parse(snapshot.data!.toString())
+                        .toStringAsFixed(2)
+                        .replaceAll(',', '.'),*/
+                        snapshot.data!.toString(),
                                         style: const TextStyle(
                                           fontSize: 100,
                                           fontWeight: FontWeight.normal,
@@ -329,7 +333,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                   menuItem(
                     context,
                     Icons.card_giftcard,
-                    "Premios",
+                    "Prêmios",
                     () {
                       if (kIsWeb) {
                         Navigator.pushNamed(context, Routes.extrato);
@@ -383,175 +387,200 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
 
   bodyForWeb(BuildContext context) {
     return Scaffold(
-      body: Column(
-        //mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 32),
-           
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: SizedBox(
-              height: 250,
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(25.0),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [
+                SizedBox(height: 20,),
+                Container(
+                  
+                  color: Color.fromARGB(255, 20, 1, 105),
+                  alignment: Alignment.topCenter,
+                  child: Image.asset('assets/images/Logo.png'),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 20,
+              ],
+            ),
+          ),
+         Expanded(
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 32),
+               
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 60),
+                child: SizedBox(
+                  height: 250,
+                  child: Container(
+                    width: 500,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(25.0),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Text(
-                        "Saldo de Pontos",
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        StreamBuilder<int>(
-                            stream: _controller.pointsController.stream,
-                            builder: (context, snapshot) {
-                              return snapshot.hasData
-                                  ? SizedBox(
-                                      height: 120,
-                                      child: Text(
-                                        snapshot.data!.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 100,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    )
-                                  : const CircularProgressIndicator();
-                            }),
-                        Container(
-                          height: 100,
-                          alignment: Alignment.bottomCenter,
-                          child: const Text(
-                            "Pts",
-                            textAlign: TextAlign.end,
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 15),
+                          child: Text(
+                            "Saldo de Pontos",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 22,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            StreamBuilder<double>(
+                                stream: _controller.pointsController.stream,
+                                builder: (context, snapshot) {
+                                  print(snapshot);
+                                  return snapshot.hasData
+                                      ? SizedBox(
+                                          height: 120,
+                                          child: Text(
+                                           /*double.parse(snapshot.data!.toString())
+                            .toStringAsFixed(2)
+                            .replaceAll(',', '.'),*/
+                            snapshot.data!.toString(),
+                                            style: const TextStyle(
+                                              fontSize: 100,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        )
+                                      : const CircularProgressIndicator();
+                                }),
+                            Container(
+                              height: 100,
+                              alignment: Alignment.bottomCenter,
+                              child: const Text(
+                                "Pts",
+                                textAlign: TextAlign.end,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 25,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: 35,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: TextButton(
+                                onPressed: () {
+                                  if (kIsWeb) {
+                                    Navigator.pushNamed(context, Routes.extrato);
+                                  } else {
+                                    _controller.pageController.jumpToPage(1);
+                                  }
+                                },
+                                child: Text(
+                                  "EXTRATO",
+                                  style: TextStyle(color: Colors.lightBlue[900]),
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 35,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25.0),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              if (kIsWeb) {
-                                Navigator.pushNamed(context, Routes.extrato);
-                              } else {
-                                _controller.pageController.jumpToPage(1);
-                              }
-                            },
-                            child: Text(
-                              "EXTRATO",
-                              style: TextStyle(color: Colors.lightBlue[900]),
-                            ),
-                          ),
-                        )
-                      ],
-                    )
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ),
-          // const Text(
-          //   "Welcome Back",
-          //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          // ),
-          // const SizedBox(
-          //   height: 10,
-          // ),
-          // const Text('email',
-          //     style: TextStyle(
-          //       color: Colors.black54,
-          //       fontWeight: FontWeight.w500,
-          //     )),
-          // const Text('name',
-          //     style: TextStyle(
-          //       color: Colors.black54,
-          //       fontWeight: FontWeight.w500,
-          //     )),
-          const SizedBox(
-            height: 15,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: GridView(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  crossAxisSpacing: 10.0,
-                ),
-                children: [
-                  menuItem(
-                    context,
-                    Icons.receipt_long_outlined,
-                    "Pontuação",
-                    () => Navigator.pushNamed(context, Routes.extrato),
-                  ),
-                  menuItem(
-                    context,
-                    Icons.domain,
-                    "Empresas",
-                    () => Navigator.pushNamed(context, Routes.empresas),
-                  ),
-                  menuItem(
-                    context,
-                    Icons.card_giftcard,
-                    "Premios",
-                    () => {},
-                  ),
-                  menuItem(
-                    context,
-                    Icons.account_circle_outlined,
-                    "Perfil",
-                    () => Navigator.pushNamed(
-                      context,
-                      Routes.profile,
-                    ),
-                  )
-                ],
+              // const Text(
+              //   "Welcome Back",
+              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              // ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // const Text('email',
+              //     style: TextStyle(
+              //       color: Colors.black54,
+              //       fontWeight: FontWeight.w500,
+              //     )),
+              // const Text('name',
+              //     style: TextStyle(
+              //       color: Colors.black54,
+              //       fontWeight: FontWeight.w500,
+              //     )),
+              const SizedBox(
+                height: 100,
               ),
-            ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 300.0),
+                  child: GridView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 4,
+                      crossAxisSpacing: 10.0,
+                    ),
+                    children: [
+                      menuItem(
+                        context,
+                        Icons.receipt_long_outlined,
+                        "Pontuação",
+                        () => Navigator.pushNamed(context, Routes.extrato),
+                      ),
+                      menuItem(
+                        context,
+                        Icons.domain,
+                        "Empresas",
+                        () {}//=> Navigator.pushNamed(context, Routes.empresas),
+                      ),
+                      menuItem(
+                        context,
+                        Icons.card_giftcard,
+                        "Prêmios",
+                        () => {},
+                      ),
+                      menuItem(
+                        context,
+                        Icons.account_circle_outlined,
+                        "Perfil",
+                        () => Navigator.pushNamed(
+                          context,
+                          Routes.profile,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              /*ActionChip(
+                  label: const Text("Logout"),
+                  onPressed: () => {
+                        _auth.doLogout(),
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, Routes.home, (route) => false)
+                      }),*/
+            ],
           ),
-          ActionChip(
-              label: const Text("Logout"),
-              onPressed: () => {
-                    _auth.doLogout(),
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, Routes.home, (route) => false)
-                  }),
+        ),
         ],
       ),
     );
