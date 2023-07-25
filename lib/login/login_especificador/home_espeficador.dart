@@ -2,9 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nucleo/components/components.dart';
 import 'package:nucleo/controllers/authenticator_controller.dart';
+
 import 'package:nucleo/controllers/specifier_controller.dart';
+import 'package:nucleo/login/login_especificador/carrossel.dart';
+
 import 'package:nucleo/login/login_especificador/profile_especificador.dart';
 import 'package:nucleo/login/login_especificador/releases_especificador.dart';
+import 'package:nucleo/model/acquisitions_item.dart';
 import 'package:nucleo/pages/patner/partner_enterprises.dart';
 import 'package:nucleo/pages/premios/premios.dart';
 import 'package:nucleo/responsive.dart';
@@ -18,8 +22,10 @@ class HomeEspecificador extends StatefulWidget {
 }
 
 class _HomeEspecificadorState extends State<HomeEspecificador> {
+   
   final SpecifierController _controller = SpecifierController();
   final AuthenticationController _auth = AuthenticationController();
+  final EdgeInsets customPadding = const EdgeInsets.fromLTRB(30, 0, 25, 0);
   bool isHomeSelected = false;
   bool isPointsSelected = false;
   bool isRewardsSelected = false;
@@ -34,6 +40,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
 
   @override
   Widget build(BuildContext context) {
+    
     return ResponsiveLayout(
       iphone: pageViewForMobile(context),
       ipad: bodyForWeb(context),
@@ -216,19 +223,19 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                                   children: [
                                     SizedBox(
                                       height: 120,
-                                      child: Text(
-                                       /*double.parse(snapshot.data!.toString())
-                        .toStringAsFixed(2)
-                        .replaceAll(',', '.'),*/
-                        snapshot.data!.toString(),
-                                        style: const TextStyle(
-                                          fontSize: 100,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                      child: FittedBox(
+                                       fit: BoxFit.scaleDown, // Scale down to fit within the available space
+            child: Text(
+              snapshot.data!.toStringAsFixed(2),
+              style: const TextStyle(
+                fontSize: 60,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
                                       ),
                                     ),
                                     Container(
-                                      height: 100,
+                                      height: 50,
                                       alignment: Alignment.bottomCenter,
                                       child: const Text(
                                         "Pts",
@@ -387,197 +394,298 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
 
   bodyForWeb(BuildContext context) {
     return Scaffold(
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Column(
         children: <Widget>[
-          Expanded(
-            flex: 1,
-            child: Column(
-              children: [
-                SizedBox(height: 20,),
-                Container(
-                  
-                  color: Color.fromARGB(255, 20, 1, 105),
-                  alignment: Alignment.topCenter,
-                  child: Image.asset('assets/images/Logo.png'),
-                ),
-              ],
-            ),
-          ),
-         Expanded(
-          child: Column(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          const MenuBar2(),
+        Expanded(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 32),
-               
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: SizedBox(
-                  height: 250,
-                  child: Container(
-                    width: 500,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(25.0),
+              Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top:80),
+                child: Column( // Add a Column to stack widgets vertically
+                  children: [
+                     Text(
+                      "Extrato".toUpperCase(),
+                      style:const TextStyle(
+                       fontWeight: FontWeight.w700,
+                       fontSize: 20,
+                     ),
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 15),
-                          child: Text(
-                            "Saldo de Pontos",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w900,
-                            ),
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            StreamBuilder<double>(
-                                stream: _controller.pointsController.stream,
-                                builder: (context, snapshot) {
-                                  print(snapshot);
-                                  return snapshot.hasData
-                                      ? SizedBox(
-                                          height: 120,
-                                          child: Text(
-                                           /*double.parse(snapshot.data!.toString())
-                            .toStringAsFixed(2)
-                            .replaceAll(',', '.'),*/
-                            snapshot.data!.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 100,
-                                              fontWeight: FontWeight.normal,
+                    SizedBox(height: 30,),
+                    Expanded(
+              child: Container( // Novo Container para envolver o Expanded
+                alignment: Alignment.bottomCenter, // Alinhamento no final da Row
+                child: StreamBuilder<List<AcquisitionsItem>>(
+                  stream: _controller.detailsController.stream,
+                  builder: (_, snapshot) {
+                    return snapshot.hasData
+                        ? ListView.builder(
+                            padding: customPadding,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (_, index) {
+                              final item = snapshot.data![index];
+                              return Card(
+                                elevation: 3,
+                                child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      height: 160,
+                                      width: 100,
+                                      padding: const EdgeInsets.only(
+                                        top: 65,
+                                      ),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.white,
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: const <Widget>[
+                                          Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: Color.fromARGB(255, 10, 22, 88),
+                                            size: 25,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            constraints: const BoxConstraints(
+                                              maxWidth: 250.0,
+                                            ),
+                                            padding: const EdgeInsets.all(8),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  item.empresa!.name ?? "No data",
+                                                  style: const TextStyle(
+                                                    color: Colors.deepOrange,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontSize: 17,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Row(
+                                                  children: const <Widget>[
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Color.fromARGB(255, 10, 22, 88),
+                                                      size: 18,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Color.fromARGB(255, 10, 22, 88),
+                                                      size: 18,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Color.fromARGB(255, 10, 22, 88),
+                                                      size: 18,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Color.fromARGB(255, 10, 22, 88),
+                                                      size: 18,
+                                                    ),
+                                                    Icon(
+                                                      Icons.star,
+                                                      color: Color.fromARGB(255, 10, 22, 88),
+                                                      size: 18,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        )
-                                      : const CircularProgressIndicator();
-                                }),
-                            Container(
-                              height: 100,
-                              alignment: Alignment.bottomCenter,
-                              child: const Text(
-                                "Pts",
-                                textAlign: TextAlign.end,
+                                          const SizedBox(
+                                            width: 50,
+                                          ),
+                                          Container(
+                                            constraints: const BoxConstraints(
+                                              maxWidth: 100,
+                                            ),
+                                            padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  snapshot.data![index].valor ?? "No data",
+                                                  style: const TextStyle(
+                                                    color: Colors.black,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 4,
+                                                ),
+                                                const Text(
+                                                  "Pts",
+                                                  style: TextStyle(
+                                                    color: Colors.deepOrange,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          )
+                        : const CircularProgressIndicator();
+                  },
+                ),
+              ),
+            ),
+                  ],
+                ),
+              ),
+            ),
+             Expanded(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 32),
+                   
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 100),
+                    child: SizedBox(
+                      height: 250,
+                      child: Container(
+                        width: 500,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(25.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 15),
+                              child: Text(
+                                "Saldo de Pontos",
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.w900,
                                 ),
                               ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                StreamBuilder<double>(
+  stream: _controller.pointsController.stream,
+  builder: (context, snapshot) {
+    return snapshot.hasData
+      ? SizedBox(
+          height: 120,
+          child: FittedBox( // Use FittedBox to scale the content
+            fit: BoxFit.scaleDown, // Scale down to fit within the available space
+            child: Text(
+              snapshot.data!.toStringAsFixed(2),
+              style: const TextStyle(
+                fontSize: 60,
+                fontWeight: FontWeight.normal,
+              ),
+            ),
+          ),
+        )
+      : const CircularProgressIndicator();
+  },
+),
+                                Container(
+                                  height: 100,
+                                  alignment: Alignment.bottomCenter,
+                                  child: const Text(
+                                    "Pts",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 25,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 35,
+                                  width: 150,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      if (kIsWeb) {
+                                        Navigator.pushNamed(context, Routes.extrato);
+                                      } else {
+                                        _controller.pageController.jumpToPage(1);
+                                      }
+                                    },
+                                    child: Text(
+                                      "EXTRATO",
+                                      style: TextStyle(color: Colors.lightBlue[900]),
+                                    ),
+                                  ),
+                                )
+                              ],
                             )
                           ],
                         ),
-                        const SizedBox(
-                          height: 25,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 35,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(25.0),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  if (kIsWeb) {
-                                    Navigator.pushNamed(context, Routes.extrato);
-                                  } else {
-                                    _controller.pageController.jumpToPage(1);
-                                  }
-                                },
-                                child: Text(
-                                  "EXTRATO",
-                                  style: TextStyle(color: Colors.lightBlue[900]),
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-              // const Text(
-              //   "Welcome Back",
-              //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              // ),
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              // const Text('email',
-              //     style: TextStyle(
-              //       color: Colors.black54,
-              //       fontWeight: FontWeight.w500,
-              //     )),
-              // const Text('name',
-              //     style: TextStyle(
-              //       color: Colors.black54,
-              //       fontWeight: FontWeight.w500,
-              //     )),
-              const SizedBox(
-                height: 100,
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 300.0),
-                  child: GridView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      crossAxisSpacing: 10.0,
-                    ),
-                    children: [
-                      menuItem(
-                        context,
-                        Icons.receipt_long_outlined,
-                        "Pontuação",
-                        () => Navigator.pushNamed(context, Routes.extrato),
-                      ),
-                      menuItem(
-                        context,
-                        Icons.domain,
-                        "Empresas",
-                        () {}//=> Navigator.pushNamed(context, Routes.empresas),
-                      ),
-                      menuItem(
-                        context,
-                        Icons.card_giftcard,
-                        "Prêmios",
-                        () => {},
-                      ),
-                      menuItem(
-                        context,
-                        Icons.account_circle_outlined,
-                        "Perfil",
-                        () => Navigator.pushNamed(
-                          context,
-                          Routes.profile,
-                        ),
-                      )
-                    ],
+                  SizedBox(
+                    height: 10,
                   ),
-                ),
+                  Expanded(
+        child: Container(
+          
+          width: 400,
+          child: ImageCarousel(
+            imageAssetPaths: const [
+              'assets/images/casadecor.png',
+              'assets/images/porto.png',
+              'assets/images/argentina.jpg',
+              'assets/images/uruguai.png',
+              'assets/images/egito.png',
+              'assets/images/Paris.png',
+            ],
+          ),
+        ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+              
+                ],
               ),
-              /*ActionChip(
-                  label: const Text("Logout"),
-                  onPressed: () => {
-                        _auth.doLogout(),
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, Routes.home, (route) => false)
-                      }),*/
+            ),
             ],
           ),
         ),

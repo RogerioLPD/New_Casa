@@ -14,8 +14,8 @@ import 'package:nucleo/login/login_empresas/login_empresas.dart';
 import 'package:nucleo/login/login_admistrador/register_empresas.dart';
 import 'package:nucleo/login/login_admistrador/cadastro_especificador.dart';
 import 'package:nucleo/login/login_especificador/login_especificador.dart';
+import 'package:nucleo/login/login_especificador/update_especificador.dart';
 import 'package:nucleo/pages/newlogin.dart';
-
 import 'package:nucleo/pages/pages.dart';
 import 'package:nucleo/pages/patner/partner_enterprises.dart';
 import 'package:nucleo/pages/premios/premios.dart';
@@ -109,8 +109,9 @@ class MyApp extends StatelessWidget {
               return const MenuSide();
             case Routes.lancamentos:
               return const HomeEmpresas();
-              
-
+              case Routes.updateespecificador:
+              return const UpdateEspecificador();
+               
             default:
               return const SizedBox.shrink();
           }

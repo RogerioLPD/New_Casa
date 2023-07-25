@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/gestures.dart';
@@ -12,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:nucleo/components/blog.dart';
 import 'package:nucleo/components/color.dart';
 import 'package:nucleo/controllers/administrator_controller.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../routes.dart';
 
 class CadastroEspecificador extends StatefulWidget {
@@ -40,16 +38,16 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   final _senhaController = TextEditingController();
   final _senhaCController = TextEditingController();
   bool visivelSenha = true;
-  Uint8List? _selectedBytes;
-  PlatformFile? _imageFile;
   bool visivelCSenha = true;
   List<PlatformFile>? _paths;
+  Uint8List? _selectedBytes;
+  PlatformFile? _imageFile;
 
   var regexTextAnNumber = FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9 àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]'));
   var regexTextOnly = FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]'));
   var regexNumberOnly = FilteringTextInputFormatter.allow(RegExp(r'[0-9]'));
 
-  void pickFiles() async {
+ void pickFiles() async {
   try {
     _imageFile = (await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -61,6 +59,15 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
     if (_imageFile != null) {
       File file = File(_imageFile!.path!);
       _selectedBytes = await file.readAsBytes();
+
+      // Exibir a Toast Message após o carregamento da imagem
+      Fluttertoast.showToast(
+        msg: "IMAGEM CARREGADA COM SUCESSO",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.green,
+        textColor: Colors.white,
+      );
     }
   } on PlatformException catch (e) {
     log('Unsupported operation' + e.toString());
@@ -69,8 +76,17 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   }
 }
 
-
-
+void showToast(String message) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 3,
+    backgroundColor: Colors.black87,
+    textColor: Colors.white,
+    fontSize: 16.0,
+  );
+}
 
   void verSenha() {
     setState(() {
@@ -87,10 +103,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     // appBar: const PreferredSize(
-      //  preferredSize: Size.fromHeight(150),
-        //child: MenuBar1(),
-    //  ),
+      
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -103,7 +116,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                   height: MediaQuery.of(context).size.height * .0,
                 ),
                 Image.asset(
-                  'assets/images/Nucleo.png',
+                  'assets/images/Logo.png',
                   width: 460,
                   height: 240,
                   fit: BoxFit.contain,
@@ -111,8 +124,9 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                 const SizedBox(
                   height: 40,
                 ),
+                
                 TextButton(
-                  child: const Text('Inserir Foto'),
+                  child: const Text('Inserir foto'),
                   onPressed: () async {
                     pickFiles();
                   },
@@ -230,7 +244,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                     return null;
                   },
                 ),
-                TextFormField(
+                /*TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _seguimentoController,
                   inputFormatters: [
@@ -440,74 +454,71 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                 //),
                 const SizedBox(
                   height: 40,
+                ),*/
+                const SizedBox(
+                  height: 40,
                 ),
                 Align(
-  alignment: Alignment.bottomCenter,
-  child: MaterialButton(
-    padding: const EdgeInsets.symmetric(horizontal: 6),
-    elevation: 0,
-    onPressed: () async {
-      if (_formKey.currentState!.validate()) {
-        if (_selectedBytes == null) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Selecione uma imagem')),
-          );
-          return;
-        }
-        
-        bool cadastro = await _controller.createSpecified(
-          name: _nomeController.text,
-          cpf: _cpfController.text.trim(),
-          seguimento: _seguimentoController.text,
-          telefone: _telefoneController.text,
-          celular: _celularController.text,
-          email: _emailController.text,
-          endereco: _enderecoController.text,
-          numero: _numeroController.text,
-          bairro: _bairroController.text,
-          cidade: _cidadeController.text,
-          estado: _estadoController.text,
-          password: _senhaController.text,
-          bytes: _selectedBytes,
-        );
-
-        if (cadastro) {
-          Navigator.pushNamedAndRemoveUntil(
-            context, Routes.cadastroespecificador, (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Erro ao fazer cadastro')),
-          );
-        }
-      }
-    },
-    child: Text(
-      'REGISTRAR',
-      style: GoogleFonts.montserrat(
-        color: textPrimary,
-        fontWeight: FontWeight.w700,
-        fontSize: 18),
-    ),
-  ),
-),
-
+                  alignment: Alignment.bottomCenter,
+                  child: MaterialButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    elevation: 0,
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        bool cadastro = await _controller.createSpecified(
+                          name: _nomeController.text,
+                          cpf: _cpfController.text.trim(),
+                         // seguimento: _seguimentoController.text,
+                         // telefone: _telefoneController.text,
+                         // celular: _celularController.text,
+                          email: _emailController.text,
+                         // endereco: _enderecoController.text,
+                         // numero: _numeroController.text,
+                         // bairro: _bairroController.text,
+                         // cidade: _cidadeController.text,
+                         // estado: _estadoController.text,
+                          password: _senhaController.text,
+                          bytes: _selectedBytes,
+                        );
+                        if (cadastro) {
+                          // ignore: use_build_context_synchronously
+                          showToast("CADASTRO CONCLUÍDO COM SUCESSO AO FAZER O LOGIN ATUALIZE SEUS DADOS PARA QUE POSSA RECEBER PONTOS");
+                          Navigator.pushNamedAndRemoveUntil(context, Routes.loginespecificador, (route) => false);
+                        } else {
+                          // ignore: use_build_context_synchronously
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text('Erro ao fazer cadastro')),
+                          );
+                        }
+                      }
+                    },
+                    child: Text(
+                      'REGISTRAR',
+                      style: GoogleFonts.montserrat(
+                          color: textPrimary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 18),
+                    ),
+                  ),
+                ),
                 const SizedBox(
                   height: 60,
                 ),
-                 RichText(
-                   text: TextSpan(children: [
-                     TextSpan(
-                       text: "Já tem uma conta? Faça o Login ",
-                       recognizer: TapGestureRecognizer()
-                         ..onTap = () =>
-                            Navigator.pushNamed(context, Routes.loginespecificador),
-                       style: GoogleFonts.montserrat(
-                          color: textPrimary,
-                           fontWeight: FontWeight.w700,
-                           fontSize: 13),
-                     ),
-                   ]),
-                 ),
+                // RichText(
+                //   text: TextSpan(children: [
+                //     TextSpan(
+                //       text: "Já tem uma conta? Faça o Login ",
+                //       recognizer: TapGestureRecognizer()
+                //         ..onTap = () =>
+                //             Navigator.pushNamed(context, Routes.loginview),
+                //       style: GoogleFonts.montserrat(
+                //           color: textPrimary,
+                //           fontWeight: FontWeight.w700,
+                //           fontSize: 13),
+                //     ),
+                //   ]),
+                // ),
                 Align(
                   alignment: Alignment.topRight,
                   child: MaterialButton(

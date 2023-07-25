@@ -216,10 +216,9 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                 Text(
                   "Extrato".toUpperCase(),
                   style:const TextStyle(
-                                              //color: Color.fromARGB(255, 10, 22, 88),
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 20,
-                                            ),
+                   fontWeight: FontWeight.w700,
+                   fontSize: 20,
+                 ),
                 ),
               ],
             ),
@@ -358,79 +357,7 @@ class _ReleasesEspecificadorState extends State<ReleasesEspecificador> {
                               ],
                             ),
                           );
-                        
-                      
-                    
-                        
-                    
-
-                             /*Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                //borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 2,
-                                    blurRadius: 6,
-                                    offset: const Offset(0, 3),
-                                  ),
-                                ],
-                              ),
-                              child: SizedBox(
-                                height: 100,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.end,
-                                  children: [
-                                    Container(
-                                      constraints: const BoxConstraints(
-                                       maxWidth: 0.5,
-                                      ),
-                                      padding: const EdgeInsets.only(left:8),
-                                      child: const Icon(Icons.arrow_right
-                                        
-                                      ),
-                                    ),
-                                    const SizedBox(width: 30,),
-                                    Container(
-                                      
-                                      constraints: const BoxConstraints(
-                                        maxWidth: 150.0,
-                                      ),
-                                      padding: const EdgeInsets.all(8),
-                                      child: Text(
-                                        snapshot.data![index].empresa!.name ??
-                                            "No data",
-                                        textAlign: TextAlign.left,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
-                                    ),
-                                     const SizedBox(width: 100,),
-                                     Expanded(
-                                      child: Container(
-                                        constraints: const BoxConstraints(
-                                          minWidth: 40.0,
-                                          maxWidth: 600.0,
-                                        ),
-                                        padding: const EdgeInsets.all(8),
-                                        child: Text(
-                                          snapshot.data![index].valor ?? "No data",
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );*/
+              
                           },
                         ),
                       )

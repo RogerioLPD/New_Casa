@@ -308,7 +308,7 @@ class _LoginViewState extends State<LoginView> {
       if (userType == 'EMPRESA') {
         Navigator.pushReplacementNamed(context, Routes.homeempresas);
       } else if (userType == 'ESPECIFICADOR') {
-        Navigator.pushNamed(context, Routes.registerempresas);
+        Navigator.pushNamed(context, Routes.loginespecificador);
       } else {
         Navigator.pushNamed(context, Routes.loginview);
       }

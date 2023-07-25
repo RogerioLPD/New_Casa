@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/gestures.dart';
@@ -8,20 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:nucleo/components/blog.dart';
 import 'package:nucleo/components/color.dart';
-import 'package:nucleo/components/components.dart';
 import 'package:nucleo/controllers/administrator_controller.dart';
 
 import '../../routes.dart';
 
-class RegisterEmpresas extends StatefulWidget {
-  const RegisterEmpresas({Key? key}) : super(key: key);
+class UpdateEspecificador extends StatefulWidget {
+  const UpdateEspecificador({Key? key}) : super(key: key);
 
   @override
-  State<RegisterEmpresas> createState() => _RegisterEmpresasState();
+  State<UpdateEspecificador> createState() => _UpdateEspecificadorState();
 }
 
-class _RegisterEmpresasState extends State<RegisterEmpresas> {
+class _UpdateEspecificadorState extends State<UpdateEspecificador> {
   final AdministradorController _controller = AdministradorController();
   bool isActive = false;
   final _formKey = GlobalKey<FormState>();
@@ -46,22 +45,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
   var regexTextOnly = FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]'));
   var regexNumberOnly = FilteringTextInputFormatter.allow(RegExp(r'[0-9]'));
 
-  void pickFiles() async {
-    try {
-      _paths = (await FilePicker.platform.pickFiles(
-        type: FileType.custom,
-        allowMultiple: false,
-        onFileLoading: (FilePickerStatus status) => print(status),
-        allowedExtensions: ['png', 'jpg', 'jpeg', 'heic'],
-      ))
-          ?.files;
-    } on PlatformException catch (e) {
-      log('Unsupported operation$e');
-    } catch (e) {
-      log(e.toString());
-    }
-  }
-
+ 
   void verSenha() {
     setState(() {
       visivelSenha = !visivelSenha;
@@ -77,10 +61,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(150),
-        child: MenuBar1(),
-      ),
+      
       body: Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -93,7 +74,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                   height: MediaQuery.of(context).size.height * .0,
                 ),
                 Image.asset(
-                  'assets/images/Nucleo.png',
+                  'assets/images/Logo.png',
                   width: 460,
                   height: 240,
                   fit: BoxFit.contain,
@@ -101,13 +82,8 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                 const SizedBox(
                   height: 40,
                 ),
-                TextButton(
-                  child: const Text('Inserir Logo'),
-                  onPressed: () async {
-                    pickFiles();
-                  },
-                ),
-                TextFormField(
+                
+                /*TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _nomeController,
                   inputFormatters: [
@@ -127,7 +103,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                     }
                     return null;
                   },
-                ),
+                ),*/
                 TextFormField(
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -148,7 +124,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                         prefixIcon: Icon(
                           Icons.account_circle,
                           color: Color(0xFF3A3A3A),
-                        ))),
+                        ))),/*
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
@@ -161,7 +137,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                     if (value == null || value.isEmpty) {
                       return 'Digite seu e-mail';
                     } else if (!RegExp(
-                        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                         .hasMatch(value)) {
                       return 'Digite um e-mail válido';
                     }
@@ -175,7 +151,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                   decoration: InputDecoration(
                     hintText: 'Digite sua senha',
                     hintStyle:
-                    const TextStyle(color: Colors.grey, fontSize: 14),
+                        const TextStyle(color: Colors.grey, fontSize: 14),
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(visivelSenha
@@ -200,7 +176,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                   decoration: InputDecoration(
                     hintText: 'Confirme sua senha',
                     hintStyle:
-                    const TextStyle(color: Colors.grey, fontSize: 14),
+                        const TextStyle(color: Colors.grey, fontSize: 14),
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
                       icon: Icon(visivelCSenha
@@ -219,7 +195,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                     }
                     return null;
                   },
-                ),
+                ),*/
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _seguimentoController,
@@ -283,21 +259,22 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                     return null;
                   },
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: TextFormField(
+                //Row(
+                 // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 // children: [
+                   // Expanded(
+                    //  child: 
+                    TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _enderecoController,
                         inputFormatters: [
-                          LengthLimitingTextInputFormatter(120),
+                          LengthLimitingTextInputFormatter(20),
                           regexTextAnNumber
                         ],
                         decoration: const InputDecoration(
-                          hintText: 'Endereço',
+                          hintText: 'Endereço - Não digitar mais de 20 carácteres!',
                           hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 14),
+                              TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
                             Icons.place,
                           ),
@@ -309,13 +286,14 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                           return null;
                         },
                       ),
-                    ),
+                  //  ),
                     const SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      width: 100,
-                      child: TextFormField(
+                    //SizedBox(
+                    //  width: 100,
+                    //  child:
+                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _numeroController,
                         inputFormatters: [
@@ -325,7 +303,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                         decoration: const InputDecoration(
                           hintText: 'Numero',
                           hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 14),
+                              TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
                             Icons.place,
                           ),
@@ -337,23 +315,24 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                           return null;
                         },
                       ),
-                    ),
+                    //),
                     const SizedBox(
                       width: 10,
                     ),
-                    SizedBox(
-                      width: 250,
-                      child: TextFormField(
+                    //SizedBox(
+                    //  width: 250,
+                     // child:
+                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _bairroController,
                         inputFormatters: [
-                          //LengthLimitingTextInputFormatter(20),
+                          LengthLimitingTextInputFormatter(20),
                           regexTextAnNumber
                         ],
                         decoration: const InputDecoration(
                           hintText: 'Bairro',
                           hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 14),
+                              TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
                             Icons.place,
                           ),
@@ -365,13 +344,14 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                           return null;
                         },
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
+                   // ),
+                //  ],
+               // ),
+               // Row(
+                //  children: [
+                  //  Expanded(
+                    //  child: 
+                      TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _cidadeController,
                         inputFormatters: [
@@ -381,7 +361,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                         decoration: const InputDecoration(
                           hintText: 'Cidade',
                           hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 14),
+                              TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
                             Icons.place,
                           ),
@@ -393,12 +373,13 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                           return null;
                         },
                       ),
-                    ),
+                   // ),
                     const SizedBox(
                       width: 10,
                     ),
-                    Expanded(
-                      child: TextFormField(
+                  //  Expanded(
+                  //    child:
+                       TextFormField(
                         keyboardType: TextInputType.text,
                         controller: _estadoController,
                         inputFormatters: [
@@ -408,7 +389,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                         decoration: const InputDecoration(
                           hintText: 'Estado',
                           hintStyle:
-                          TextStyle(color: Colors.grey, fontSize: 14),
+                              TextStyle(color: Colors.grey, fontSize: 14),
                           prefixIcon: Icon(
                             Icons.place,
                           ),
@@ -420,8 +401,11 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                           return null;
                         },
                       ),
-                    ),
-                  ],
+                   // ),
+                 // ],
+                //),
+                const SizedBox(
+                  height: 40,
                 ),
                 const SizedBox(
                   height: 40,
@@ -433,36 +417,35 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                     elevation: 0,
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        bool cadastro = await _controller.createEnterprise(
-                          name: _nomeController.text,
+                        bool cadastro = await _controller.updateEspecificador(
+                          //name: _nomeController.text,
                           cpf: _cpfController.text.trim(),
                           seguimento: _seguimentoController.text,
                           telefone: _telefoneController.text,
                           celular: _celularController.text,
-                          email: _emailController.text,
+                         // email: _emailController.text,
                           endereco: _enderecoController.text,
                           numero: _numeroController.text,
                           bairro: _bairroController.text,
                           cidade: _cidadeController.text,
-                          password: _senhaController.text,
                           estado: _estadoController.text,
-                          bytes: _paths!.first.bytes,
+                         // password: _senhaController.text,
+                         // bytes: _paths!.first.bytes,
                         );
-                        print("CADASTRO ${cadastro}");
                         if (cadastro) {
                           // ignore: use_build_context_synchronously
-                          Navigator.pushNamedAndRemoveUntil(context, Routes.loginview, (route) => false);
+                          Navigator.pushNamedAndRemoveUntil(context, Routes.profile, (route) => false);
                         } else {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                                content: Text('Erro ao fazer cadastro')),
+                                content: Text('Erro ao atualizar')),
                           );
                         }
                       }
                     },
                     child: Text(
-                      'REGISTRAR',
+                      'Atualizar',
                       style: GoogleFonts.montserrat(
                           color: textPrimary,
                           fontWeight: FontWeight.w700,
@@ -493,7 +476,7 @@ class _RegisterEmpresasState extends State<RegisterEmpresas> {
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     elevation: 0,
                     onPressed: () =>
-                        Navigator.pushNamed(context, Routes.homeadministrador),
+                        Navigator.pushNamed(context, Routes.profile),
                     child: Text(
                       'VOLTAR',
                       style: GoogleFonts.montserrat(

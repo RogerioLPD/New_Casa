@@ -61,6 +61,21 @@ class UserDetails {
     city = json['cidade'];
     state = json['estado'];
     cep = json['cep'];
+
+    // Definir valores padrão para campos que podem ser nulos
+    photo ??= ''; // Se photo for nulo, definimos uma string vazia
+    segment ??= '';
+    type ??= '';
+    cnpj ??= '';
+    cpf ??= '';
+    phone ??= '';
+    cellPhone ??= '';
+    address ??= '';
+    number ??= '';
+    district ??= '';
+    city ??= '';
+    state ??= '';
+    cep ??= '';
   }
 
   Map<String, dynamic> toJson() {

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:nucleo/components/components.dart';
 import 'package:nucleo/controllers/authenticator_controller.dart';
 import 'package:nucleo/controllers/releases_controller.dart';
 import 'package:nucleo/routes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class HomeEmpresas extends StatefulWidget {
   const HomeEmpresas({Key? key}) : super(key: key);
@@ -25,6 +28,7 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
   final especificadorController = TextEditingController();
   String valorPontosControllerText = "";
   final AuthenticationController _authController = AuthenticationController();
+  String especificadorNome = '';
 
   @override
   void dispose() {
@@ -34,24 +38,103 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
     super.dispose();
   }
 
-  void calcularPontos() {
+ 
+
+void calcularPontos() {
   final valorVendas = NumberFormat.currency(locale: 'pt_BR').parse(valorVendasController.text).toDouble();
   final valorPontos = valorVendas / 1000;
-  final valorPontosFormatado = NumberFormat.compact(locale: 'pt_BR').format(valorPontos);
 
-  // Substitua a vírgula por ponto
-  final valorPontosFormatadoPonto = valorPontosFormatado.replaceAll(',', '.');
+  // Formatação do valorPontos com duas casas decimais e substituindo ',' por '.'
+  final valorPontosFormatado = valorPontos.toStringAsFixed(2).replaceAll(',', '.');
 
-  valorPontosController.sink.add(valorPontosFormatadoPonto);
-  valorPontosControllerText = valorPontosFormatadoPonto;
+  valorPontosController.sink.add(valorPontosFormatado);
+  valorPontosControllerText = valorPontosFormatado;
+  especificadorNome = especificadorController.text;
 }
+
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<bool>(
-      stream: _authController.loginCheckLoading.stream,
+    return FutureBuilder<bool>(
+      future: getUserData(), // Chamar a função getUserData() aqui
       builder: (context, snapshot) {
-        if (snapshot.hasData && snapshot.data!) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          // Mostrar um widget de carregamento enquanto aguarda os dados
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else if (snapshot.hasError || !snapshot.data!) {
+          
+          // Caso ocorra algum erro ou o usuário não esteja logado como empresa
+          // Redirecionar para a página de registro ou login para empresas
+         return Scaffold(
+  body: Column(
+    
+    children: <Widget> [
+     Expanded(
+      child: Container(
+        height: 600,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/Logo.png'),
+            fit: BoxFit.contain,
+          ),
+        ),
+      ),
+     ),
+         Expanded(
+            child: SizedBox(
+              height: 600,
+              child: Column(
+              children: <Widget>[
+                
+                 const SizedBox(),
+                
+                 const Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Acesso Negado!',
+                    style: TextStyle(
+                      fontSize: 60,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 252, 4, 4),
+                    ),
+                  ),
+                 ),
+                 const SizedBox(height: 20), // Espaço entre o texto e o botão
+                TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, Routes.loginespecificador);
+                  },
+                  
+                 child: const Text(
+                       'Fazer login',
+                        style: TextStyle(
+                        color: Color.fromARGB(255, 6, 2, 73),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold, // Cor do texto do botão
+                     ),
+                   ), 
+                ),
+               ],
+              ),
+             ),
+            ),
+          ],
+         ),
+        );
+
+
+        
+        } else {
+          // Caso o usuário esteja logado como empresa, mostrar a página HomeEmpresas
+          return StreamBuilder<bool>(
+            stream: _authController.loginCheckLoading.stream,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data!) {
+                
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
@@ -256,6 +339,28 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
                           // ignore: use_build_context_synchronously
                           Navigator.pushReplacementNamed(
                               context, Routes.lancamentos);
+                              setState(() {
+        // Atualiza o estado do componente para exibir a mensagem
+        especificadorNome = especificadorController.text;
+      });
+      // Exibe a mensagem de sucesso após um breve delay
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Sucesso'),
+            content: Text('Lançamento feito com sucesso para: $especificadorNome'),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
                         } else {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -330,19 +435,46 @@ class _HomeEmpresasState extends State<HomeEmpresas> {
       backgroundColor: Colors.white,
     );
      } else {
-      
-      return Scaffold(
-    body: Center(
-      child: ElevatedButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.registerempresas);
+                return Scaffold(
+                  body: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        
+                      },
+                      child: const Text(''),
+                    ),
+                  ),
+                );
+              }
+            },
+          );
+        }
+      },
+    );
+  }
+
+
+Future<bool> getUserData() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString('token');
+    if (token != null) {
+      var url = Uri.parse('https://apicasadecor.com/api/usuario/1');
+      var response = await http.get(
+        url,
+        headers: {
+          'Authorization': 'Token $token',
+          'Content-Type': 'application/json', // Defina o Content-Type como application/json
         },
-        child: Text('Registrar como empresa'),
-      ),
-    ),
-  );
+      );
+
+      if (response.statusCode == 200) {
+        var userData = jsonDecode(response.body);
+        String userType = userData['tipo'];
+        print('Tipo $userType');
+        return userType == 'EMPRESA';
+      }
     }
-  },
-);
+
+    return false;
   }
 }

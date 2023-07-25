@@ -9,7 +9,7 @@ import 'package:nucleo/controllers/authenticator_controller.dart';
 import 'package:nucleo/responsive.dart';
 import 'package:nucleo/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:nucleo/controllers/authenticator_controller.dart';
 class ImageWrapper extends StatelessWidget {
   final String image;
 
@@ -340,7 +340,204 @@ class ListItem extends StatelessWidget {
  * navigation links. Navigation links collapse into
  * a hamburger menu on screens smaller than 400px.
  */
-class MenuBar1 extends StatefulWidget {
+class MenuBar2 extends StatefulWidget {
+  const MenuBar2({super.key});
+
+  @override
+  State<MenuBar2> createState() => MenuBar2State();
+}
+
+class MenuBar2State extends State<MenuBar2> {
+  MenuBar2State({Key? key});
+
+  AuthenticationController auth = AuthenticationController();
+  bool authcheck = false;
+  late GlobalKey dropdownKey;
+
+  @override
+  void initState() {
+    dropdownKey = GlobalKey();
+    initChecks();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return menuSite(context);
+  }
+
+  initChecks() async {
+    authcheck = await auth.checkAuthentication();
+  }
+
+  menuSite(BuildContext context) {
+    rebuild();
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 30),
+          child: Row(
+            children: <Widget>[
+              InkWell(
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onTap: () => {
+                  if (ModalRoute.of(context)!.settings.name != '/')
+                    {
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, Routes.home, (Route<dynamic> route) => false)
+                    }
+                },
+                child: Text("CASA DECOR",
+                    style: GoogleFonts.montserrat(
+                        color: textPrimary,
+                        fontSize: 28,
+                        letterSpacing: 3,
+                        fontWeight: FontWeight.w500)),
+              ),
+              Flexible(
+                child: Container(
+                  alignment: Alignment.centerRight,
+                  child: Wrap(
+                    children: menuBody(true),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+            height: 1,
+            margin: const EdgeInsets.only(bottom: 30),
+            color: const Color(0xFFEEEEEE)),
+      ],
+    );
+  }
+
+  menuBody(bool isAuth) {
+    return [
+      TextButton(
+        onPressed: () => {
+          if (ModalRoute.of(context)!.settings.name != '/')
+            {Navigator.pushNamed(context, Routes.home)}
+        },
+        style: menuButtonStyle,
+        child: const Text(
+          "HOME",
+        ),
+      ),
+    
+      TextButton(
+        onPressed: () {},
+        style: menuButtonStyle,
+        child: const Text(
+          "Prêmios",
+        ),
+      ),
+      TextButton(
+        onPressed: () {},
+        style: menuButtonStyle,
+        child: const Text(
+          "Empresas",
+        ),
+      ),
+      TextButton(
+       onPressed: () {
+                auth.doLogout();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, Routes.loginespecificador, (route) => false);
+              },
+        style: menuButtonStyle,
+        child: const Text(
+          "Logout",
+        ),
+      ),
+      TextButton(
+       onPressed: () {Navigator.pushNamed(context, Routes.profile);},
+        style: menuButtonStyle,
+        child: const Text(
+          "Perfil",
+        ),
+      ),
+      
+    ];
+  }
+
+  routeManager() {}
+
+  menuMobile(BuildContext context) {
+    rebuild();
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 45, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          InkWell(
+            hoverColor: Colors.transparent,
+            highlightColor: Colors.transparent,
+            splashColor: Colors.transparent,
+            onTap: () => Navigator.popUntil(
+                context, ModalRoute.withName(Navigator.defaultRouteName)),
+            child: Text(
+              "CASA DECOR",
+              style: GoogleFonts.montserrat(
+                color: textPrimary,
+                fontSize: 15,
+                letterSpacing: 3,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          StreamBuilder<bool>(
+              stream: auth.loginCheckLoading.stream,
+              builder: (context, snapshot) {
+                return DropdownButton(
+                  key: dropdownKey,
+                  icon: const Icon(Icons.menu),
+                  disabledHint: Container(),
+                  underline: Container(),
+                  items: menuBody(snapshot.data ?? true)
+                      .map<DropdownMenuItem<Widget>>((Widget value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: value,
+                    );
+                  }).toList(),
+                  onChanged: (value) {},
+                );
+              })
+        ],
+      ),
+    );
+  }
+
+  Future<bool> rebuild() async {
+    if (!mounted) return false;
+
+    // if there's a current frame,
+    if (SchedulerBinding.instance.schedulerPhase != SchedulerPhase.idle) {
+      // wait for the end of that frame.
+      await SchedulerBinding.instance.endOfFrame;
+      if (!mounted) return false;
+    }
+
+    setState(() {});
+    return true;
+  }
+}
+Future<void> _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Não foi possível abrir o link: $url';
+    }
+  }
+
+
+  class MenuBar1 extends StatefulWidget {
   const MenuBar1({super.key});
 
   @override
@@ -506,7 +703,7 @@ class MenuBar1State extends State<MenuBar1> {
         ),
       ),
       TextButton(
-        onPressed: () {Navigator.pushReplacementNamed(context, Routes.web);},
+        onPressed: () {},
         style: menuButtonStyle,
         child: const Text(
           "CONTATO",
@@ -618,10 +815,3 @@ class MenuBar1State extends State<MenuBar1> {
     return true;
   }
 }
-Future<void> _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Não foi possível abrir o link: $url';
-    }
-  }
