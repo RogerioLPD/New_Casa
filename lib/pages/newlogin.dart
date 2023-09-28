@@ -82,18 +82,7 @@ class _LoginHomeState extends State<LoginHome> {
                   const SizedBox(
                     height: 40,
                   ),
-                  TextButton(
-                    onPressed: () => Navigator.pushNamed(
-                              context, Routes.loginespecificador),
-                    child: Text(
-                      'LOGIN ESPECIFICADOR',
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 3,
-                          fontSize: 28,
-                          color: textPrimary),
-                    ),
-                  ),
+                 
                   const SizedBox(
                     height: 40,
                   ),

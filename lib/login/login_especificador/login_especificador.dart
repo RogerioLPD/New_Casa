@@ -134,11 +134,11 @@ class _LoginEspecificadorState extends State<LoginEspecificador> {
                       ),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Digite sua senha';
+                          if (value == null || value.isEmpty) {
+                          return 'Digite sua senha';
                       }
-                      return null;
-                    },
+                      return null; // Senha válida
+                   },
                   ),
                   // Align(
                   //   alignment: Alignment.topRight,
@@ -223,6 +223,7 @@ class _LoginEspecificadorState extends State<LoginEspecificador> {
                       ),
                     ]),
                   ),
+                  
                   kIsWeb ?  Align(
                     alignment: Alignment.topRight,
                     child: MaterialButton(

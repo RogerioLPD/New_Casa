@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nucleo/components/components.dart';
 import 'package:nucleo/routes.dart';
+import 'package:nucleo/controllers/authenticator_controller.dart';
 
 
 class HomeEmpresas extends StatelessWidget {
-  const HomeEmpresas({Key? key}) : super(key: key);
+   final AuthenticationController _auth = AuthenticationController();
+   HomeEmpresas({Key? key}) : super(key: key);
 
   Color get primarySwatch => Colors.grey;
 
@@ -244,6 +246,26 @@ class HomeEmpresas extends StatelessWidget {
                       margin: marginBottom100,
                     ),
                     divider,
+                     Align(
+                  alignment: Alignment.bottomRight,
+                  child: MaterialButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    elevation: 0,
+                    onPressed: () => {
+                            _auth.doLogout(),
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context, Routes.home, (route) => false)
+                               },
+                    child: Text(
+                      'LOGOUT',
+                      style: GoogleFonts.montserrat(
+                        color: const Color(0xFF3A3A3A),
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                ),
                     const Footer(),
                   ],
                 ),

@@ -482,7 +482,7 @@ void showToast(String message) {
                         );
                         if (cadastro) {
                           // ignore: use_build_context_synchronously
-                          showToast("CADASTRO CONCLUÍDO COM SUCESSO AO FAZER O LOGIN ATUALIZE SEUS DADOS PARA QUE POSSA RECEBER PONTOS");
+                          showToast("PARABÉNS CADASTRO CONCLUÍDO COM SUCESSO!");
                           Navigator.pushNamedAndRemoveUntil(context, Routes.loginespecificador, (route) => false);
                         } else {
                           // ignore: use_build_context_synchronously

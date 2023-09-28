@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:nucleo/cadastro.dart';
 import 'package:nucleo/login/login_admistrador/cadastro_premio.dart';
 import 'package:nucleo/login/login_admistrador/home_administrador.dart';
+import 'package:nucleo/login/login_admistrador/rank.dart';
+import 'package:nucleo/login/login_admistrador/releases_page.dart';
+import 'package:nucleo/login/login_admistrador/user_list.dart';
+import 'package:nucleo/login/login_empresas/listar.dart';
 import 'package:nucleo/login/login_especificador/home_espeficador.dart';
 import 'package:nucleo/login/login_especificador/profile_especificador.dart';
 import 'package:nucleo/login/login_especificador/releases_especificador.dart';
@@ -88,29 +92,35 @@ class MyApp extends StatelessWidget {
             case Routes.cadastroespecificador:
               return const CadastroEspecificador();
             case Routes.cadastropremio:
-              return CadastroPremio();
+              return const CadastroPremio();
             case Routes.homeadministrador:
               return const HomeAdministrador();
             case Routes.extrato:
               return ReleasesEspecificador();
             case Routes.profile:
               return ProfileEspecificador();
-              case Routes.newlogin:
+            case Routes.newlogin:
               return const LoginHome();
-               case Routes.company:
+            case Routes.company:
               return const EmpresaCadastroScreen();
-
             case Routes.premios:
               return RewardsPage();
             case Routes.empresas:
               return PartnerEnterprises();
-
             case Routes.menuside:
               return const MenuSide();
             case Routes.lancamentos:
               return const HomeEmpresas();
-              case Routes.updateespecificador:
+            case Routes.updateespecificador:
               return const UpdateEspecificador();
+            /*case Routes.listar:
+              return  UserListPage();*/
+              case Routes.release:
+              return  ReleasesPage();
+              case Routes.list:
+              return  UserListPage1();
+              case Routes.rank:
+              return  ReleasesPage1();
                
             default:
               return const SizedBox.shrink();

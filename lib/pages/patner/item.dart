@@ -65,6 +65,7 @@ class ItemPartner extends StatelessWidget {
                 color: Colors.black.withOpacity(0.5),
                 fontSize: 20,
               ),
+              textAlign: TextAlign.justify,
             ),
           ),
            Container( // Container adicionado para envolver a descrição
@@ -72,6 +73,7 @@ class ItemPartner extends StatelessWidget {
             child: Text(
               description ?? "",
               style: TextStyle(color: Colors.black.withOpacity(0.5)),
+              textAlign: TextAlign.justify,
             ),
           ),
           Text(

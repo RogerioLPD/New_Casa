@@ -315,6 +315,7 @@ class ListItem extends StatelessWidget {
               child: Text(
                 description!,
                 style: bodyTextStyle,
+                textAlign: TextAlign.justify,
               ),
             ),
           ),
@@ -430,14 +431,14 @@ class MenuBar2State extends State<MenuBar2> {
       ),
     
       TextButton(
-        onPressed: () {},
+        onPressed: () {Navigator.pushNamed(context, Routes.premios);},
         style: menuButtonStyle,
         child: const Text(
           "Prêmios",
         ),
       ),
       TextButton(
-        onPressed: () {},
+        onPressed: () {Navigator.pushNamed(context, Routes.empresas);},
         style: menuButtonStyle,
         child: const Text(
           "Empresas",

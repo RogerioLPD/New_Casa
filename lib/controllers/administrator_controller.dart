@@ -161,7 +161,7 @@ Future<bool> updateEspecificador({
     int? id, // Adicione o parâmetro do ID do especificador a ser atualizado.
     //String? name,
    // email,
-    cpf,
+   // cpf,
     seguimento,
     telefone,
     celular,
@@ -189,7 +189,7 @@ Future<bool> updateEspecificador({
     Map<String, dynamic> body = {
       //"nome": name,
       //"email": email,
-      "cpf": cpf,
+      //"cpf": cpf,
       "seguimento": seguimento,
       "telefone": telefone,
       "celular": celular,

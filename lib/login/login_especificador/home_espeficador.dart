@@ -4,6 +4,7 @@ import 'package:nucleo/components/components.dart';
 import 'package:nucleo/controllers/authenticator_controller.dart';
 
 import 'package:nucleo/controllers/specifier_controller.dart';
+import 'package:nucleo/login/login_empresas/listar.dart';
 import 'package:nucleo/login/login_especificador/carrossel.dart';
 
 import 'package:nucleo/login/login_especificador/profile_especificador.dart';
@@ -57,7 +58,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
           bodyForMobile(context),
           ReleasesEspecificador(),
           RewardsPage(),
-          PartnerEnterprises(),
+          UserListPage(),
           ProfileEspecificador()
         ],
       ),

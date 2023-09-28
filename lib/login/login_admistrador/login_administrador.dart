@@ -135,11 +135,12 @@ class _LoginAdministradorState extends State<LoginAdministrador> {
                     ),
                   ),
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Digite sua senha';
-                    }
-                    return null;
-                  },
+                          if (value == null || value.isEmpty) {
+                          return 'Digite sua senha';
+                      }
+                      return null; // Senha válida
+                   },
+
                 ),
                 // Align(
                 //   alignment: Alignment.topRight,

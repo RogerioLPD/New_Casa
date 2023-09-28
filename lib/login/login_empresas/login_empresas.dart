@@ -146,11 +146,12 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Digite sua senha';
+                          if (value == null || value.isEmpty) {
+                          return 'Digite sua senha';
                       }
-                      return null;
-                    },
+                      return null; // Senha válida
+                   },
+
                   ),
                   // Align(
                   //   alignment: Alignment.topRight,
@@ -308,7 +309,7 @@ class _LoginViewState extends State<LoginView> {
       if (userType == 'EMPRESA') {
         Navigator.pushReplacementNamed(context, Routes.homeempresas);
       } else if (userType == 'ESPECIFICADOR') {
-        Navigator.pushNamed(context, Routes.loginespecificador);
+        Navigator.pushNamed(context, Routes.home);
       } else {
         Navigator.pushNamed(context, Routes.loginview);
       }

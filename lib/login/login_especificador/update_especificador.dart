@@ -103,7 +103,7 @@ class _UpdateEspecificadorState extends State<UpdateEspecificador> {
                     }
                     return null;
                   },
-                ),*/
+                ),
                 TextFormField(
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -124,7 +124,7 @@ class _UpdateEspecificadorState extends State<UpdateEspecificador> {
                         prefixIcon: Icon(
                           Icons.account_circle,
                           color: Color(0xFF3A3A3A),
-                        ))),/*
+                        ))),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
@@ -419,7 +419,7 @@ class _UpdateEspecificadorState extends State<UpdateEspecificador> {
                       if (_formKey.currentState!.validate()) {
                         bool cadastro = await _controller.updateEspecificador(
                           //name: _nomeController.text,
-                          cpf: _cpfController.text.trim(),
+                          //cpf: _cpfController.text.trim(),
                           seguimento: _seguimentoController.text,
                           telefone: _telefoneController.text,
                           celular: _celularController.text,

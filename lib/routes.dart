@@ -31,7 +31,10 @@ class Routes {
    static const String newlogin = "newlogin";
    static const String company = "company";
    static const String updateespecificador = "updateespecificador";
-   
+    static const String listar = "listar";
+    static const String release= "release";
+   static const String list= "list";
+   static const String rank= "rank";
   
 
   static Route<T> fadeThrough<T>(RouteSettings settings, WidgetBuilder page,

@@ -20,6 +20,7 @@ class HomeEmpresas extends StatefulWidget {
 }
 
 class _HomeEmpresasState extends State<HomeEmpresas> {
+  final AuthenticationController _auth = AuthenticationController();
   Color get primarySwatch => Colors.grey;
   final ReleasesController _controller = ReleasesController();
   final valorVendasController = TextEditingController();
@@ -106,11 +107,11 @@ void calcularPontos() {
                  const SizedBox(height: 20), // Espaço entre o texto e o botão
                 TextButton(
                   onPressed: () {
-                    Navigator.pushReplacementNamed(context, Routes.loginespecificador);
+                    Navigator.pushReplacementNamed(context, Routes.home);
                   },
                   
                  child: const Text(
-                       'Fazer login',
+                       'Voltar',
                         style: TextStyle(
                         color: Color.fromARGB(255, 6, 2, 73),
                         fontSize: 20,
@@ -201,7 +202,7 @@ void calcularPontos() {
                         margin: marginBottom24,
                         child: TextFormField(
                           controller: especificadorController,
-                          keyboardType: TextInputType.number,
+                          //keyboardType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,
                             CpfOuCnpjFormatter()
@@ -420,10 +421,31 @@ void calcularPontos() {
                         "LANÇAR",
                       ),
                     ),
+                    Align(
+                  alignment: Alignment.bottomRight,
+                  child: MaterialButton(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    elevation: 0,
+                    onPressed: () => {
+                            _auth.doLogout(),
+                                Navigator.pushNamedAndRemoveUntil(
+                                  context, Routes.home, (route) => false)
+                               },
+                    child: Text(
+                      'LOGOUT',
+                      style: GoogleFonts.montserrat(
+                        color: const Color(0xFF3A3A3A),
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1,
+                      ),
+                    ),
+                  ),
+                ),
                     Container(
                       margin: marginBottom100,
                     ),
                     divider,
+                     
                     const Footer(),
                   ],
                 ),
@@ -478,3 +500,5 @@ Future<bool> getUserData() async {
     return false;
   }
 }
+
+
