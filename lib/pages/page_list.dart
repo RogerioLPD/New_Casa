@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nucleo/components/components.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+
 // ignore: todo
 // TODO Replace with object model.
 const String listItemTitleText1 = "COMO FUNCIONA?";
@@ -21,8 +22,6 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  
- 
   @override
   void initState() {
     super.initState();
@@ -43,18 +42,37 @@ class _ListPageState extends State<ListPage> {
               child: Column(
                 children: <Widget>[
                   const MenuBar1(),
-                  Image.asset(
-                    'assets/images/Logo.png',
-                    width: 400,
-                    height: 140,
-                    fit: BoxFit.fill,
-                  ),
+                  /*Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: 300,
+                        maxHeight: 200,
+                      ),
+                      child: Image.asset(
+                        'assets/images/Grupo.png',
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),*/
                   divider,
-                  Image.asset(
-                    'assets/images/peoples.png',
+                  Image.network(
+                    'https://giftty.com/wp-content/uploads/2021/06/premiacao-para-funcionarios.jpg',
                     width: double.infinity,
                     height: 370,
                     fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return const SizedBox(
+                        height: 370,
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    },
+                    errorBuilder: (context, error, stackTrace) {
+                      return const SizedBox(
+                        height: 370,
+                        child: Center(child: Text('Erro ao carregar imagem')),
+                      );
+                    },
                   ),
                   divider,
                   const ListItem(
@@ -93,18 +111,20 @@ class _ListPageState extends State<ListPage> {
     );
   }
 }
+
 void _showPopout(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return SizedBox(
         height: 300,
-            width: 400,
+        width: 400,
         child: AlertDialog(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0), // Ajuste esse valor para arredondar as bordas
+            borderRadius: BorderRadius.circular(
+                10.0), // Ajuste esse valor para arredondar as bordas
           ),
-         /* title:  AnimatedTextKit(
+          /* title:  AnimatedTextKit(
         repeatForever: true,
         animatedTexts: [
           WavyAnimatedText('NÚCLEO CASA DECOR'),
@@ -115,41 +135,47 @@ void _showPopout(BuildContext context) {
         },
           ),*/
           content: SizedBox(
-            height:300,
-            width: 400, // Ajuste esse valor para definir a largura do content do AlertDialog
+            height: 300,
+            width:
+                400, // Ajuste esse valor para definir a largura do content do AlertDialog
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
                 AnimatedTextKit(
-        repeatForever: true,
-        animatedTexts: [
-          WavyAnimatedText('BAIXE AGORA O APLICATIVO!', textStyle: GoogleFonts.montserrat(
-                          color: textPrimary,
-                          fontSize: 18,
-                          letterSpacing: 3,
-                          fontWeight: FontWeight.w500),textAlign: TextAlign.center),
-          
-        ],
-        onTap: () {
-          print("Tap Event");
-        },
-          ),
-          const SizedBox(height: 40),
-                 Text('Se você é um profissional das áreas de Arquitetura e Decoração baixe agora o app faça o seu cadastro e comece a pontuar!',style:GoogleFonts.montserrat(
-                          color: textPrimary,
-                          fontSize: 16,
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.normal) ,
-                          textAlign: TextAlign.justify,),
+                  repeatForever: true,
+                  animatedTexts: [
+                    WavyAnimatedText('BAIXE AGORA O APLICATIVO!',
+                        textStyle: GoogleFonts.montserrat(
+                            color: textPrimary,
+                            fontSize: 18,
+                            letterSpacing: 3,
+                            fontWeight: FontWeight.w500),
+                        textAlign: TextAlign.center),
+                  ],
+                  onTap: () {
+                    print("Tap Event");
+                  },
+                ),
+                const SizedBox(height: 40),
+                Text(
+                  'Se você é um profissional das áreas de Arquitetura e Decoração baixe agora o app faça o seu cadastro e comece a pontuar!',
+                  style: GoogleFonts.montserrat(
+                      color: textPrimary,
+                      fontSize: 16,
+                      letterSpacing: 1,
+                      fontWeight: FontWeight.normal),
+                  textAlign: TextAlign.justify,
+                ),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     GestureDetector(
                       onTap: () {
-                        _launchURL('https://apps.apple.com/br/app/nucleo-casadecor/id6450630598');
+                        _launchURL(
+                            'https://apps.apple.com/br/app/nucleo-casadecor/id6450630598');
                       },
                       child: Image.asset(
                         'assets/images/apple.png',
@@ -161,7 +187,8 @@ void _showPopout(BuildContext context) {
                     const SizedBox(width: 2),
                     GestureDetector(
                       onTap: () {
-                        _launchURL('https://play.google.com/store/apps/details?id=com.nucleo.casadecor');
+                        _launchURL(
+                            'https://play.google.com/store/apps/details?id=com.nucleo.casadecor');
                       },
                       child: Image.asset(
                         'assets/images/generic.png',
@@ -175,7 +202,7 @@ void _showPopout(BuildContext context) {
               ],
             ),
           ),
-          
+
           /*actions: <Widget>[
             TextButton(
               onPressed: () {
@@ -190,15 +217,10 @@ void _showPopout(BuildContext context) {
   );
 }
 
-
-
 void _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Não foi possível abrir o URL: $url';
-    }
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Não foi possível abrir o URL: $url';
   }
-
-
-
+}

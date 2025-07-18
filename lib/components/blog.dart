@@ -543,274 +543,138 @@ Future<void> _launchURL(String url) async {
   State<MenuBar1> createState() => MenuBar1State();
 }
 
-class MenuBar1State extends State<MenuBar1> {
-  MenuBar1State({Key? key});
-
-  AuthenticationController auth = AuthenticationController();
+class MenuBar1State extends State<MenuBar1> with SingleTickerProviderStateMixin {
   bool authcheck = false;
-  late GlobalKey dropdownKey;
+  late AnimationController _animationController;
+  late Animation<Offset> _drawerSlideAnimation;
+  late AnimationController _controller;
+  late Animation<Offset> _slideAnimation;
 
-  @override
+ 
+
+ @override
   void initState() {
-    dropdownKey = GlobalKey();
-    initChecks();
     super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 300),
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(1.0, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOut,
+    ));
+  }
+
+  void _openDrawer() {
+    _controller.forward();
+    showDialog(
+      context: context,
+      barrierColor: Colors.black54,
+      builder: (_) => SlideTransition(
+        position: _slideAnimation,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            width: 250,
+            color: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 16),
+            child: ListView(
+              children: _buildMenuItems(),
+            ),
+          ),
+        ),
+      ),
+    ).then((_) {
+      _controller.reverse();
+    });
+  }
+
+  List<Widget> _buildMenuItems() {
+    return [
+      _menuButton("HOME", () {}),
+      _menuButton("BLOG", () {}),
+      _menuButton("REVISTA", () => _launchURL('https://revistacasadecor.com.br')),
+      _menuButton("EQUIPE", () {}),
+      _menuButton("CIDADES", () {}),
+      _menuButton("AÇÕES", () {}),
+      _menuButton("CONTATO", () {}),
+      _menuButton("LOGIN",  () {
+          if (ModalRoute.of(context)!.settings.name != Routes.loginadministrador) {
+            Navigator.pushReplacementNamed(context, Routes.loginadministrador);
+          }
+          //Navigator.pop(dropdownKey.currentContext!);
+        },),
+    ];
+  }
+
+  Widget _menuButton(String title, VoidCallback onPressed) {
+    return TextButton(
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.black,
+        textStyle: GoogleFonts.montserrat(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 1,
+        ),
+      ),
+      child: Text(title),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return menuSite(context);
-  }
+    final bool isMobile = MediaQuery.of(context).size.width < 950;
 
-  initChecks() async {
-    authcheck = await auth.checkAuthentication();
-  }
-
-  menuSite(BuildContext context) {
-    rebuild();
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
+      children: [
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 30),
+          margin: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
           child: Row(
-            children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               InkWell(
-                hoverColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                splashColor: Colors.transparent,
-                onTap: () => {
-                  if (ModalRoute.of(context)!.settings.name != '/')
-                    {
-                      Navigator.pushNamedAndRemoveUntil(
-                          context, Routes.home, (Route<dynamic> route) => false)
-                    }
+                onTap: () {
+                  if (ModalRoute.of(context)?.settings.name != '/') {
+                    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                  }
                 },
-                child: Text("CASA DECOR",
-                    style: GoogleFonts.montserrat(
-                        color: textPrimary,
-                        fontSize: 28,
-                        letterSpacing: 3,
-                        fontWeight: FontWeight.w500)),
-              ),
-              Flexible(
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  child: Wrap(
-                    children: menuBody(true),
+                child: Text(
+                  "CASA DECOR",
+                  style: GoogleFonts.montserrat(
+                    color: Colors.black,
+                    fontSize: isMobile ? 20 : 28,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 3,
                   ),
                 ),
               ),
+              if (!isMobile)
+                Row(children: _buildMenuItems())
+              else
+                IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: _openDrawer,
+                ),
             ],
           ),
         ),
-        Container(
-            height: 1,
-            margin: const EdgeInsets.only(bottom: 30),
-            color: const Color(0xFFEEEEEE)),
+        const Divider(height: 1, thickness: 1, color: Color(0xFFEEEEEE)),
       ],
     );
   }
 
-  menuBody(bool isAuth) {
-    return [
-      TextButton(
-        onPressed: () => {
-          if (ModalRoute.of(context)!.settings.name != '/')
-            {Navigator.pushNamed(context, Routes.home)}
-        },
-        style: menuButtonStyle,
-        child: const Text(
-          "HOME",
-        ),
-      ),
-     /* TextButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.loginview);
-          //Navigator.pop(dropdownKey.currentContext!);
-        },
-        style: menuButtonStyle,
-        child: authcheck == false
-            ? const Text(
-                "LOGIN EMPRESAS",
-              )
-            : const Text(
-                "HOME EMPRESAS",
-              ),
-      ),
-      TextButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.loginespecificador);
-          //Navigator.pop(dropdownKey.currentContext!);
-        },
-        style: menuButtonStyle,
-        child: authcheck == false
-            ? const Text(
-                "LOGIN ESPECIFICADOR",
-              )
-            : const Text(
-                "HOME ESPECIFICADOR",
-              ),
-      ),
-      TextButton(
-        onPressed: () {
-          Navigator.pushNamed(context, Routes.loginadministrador);
-          //Navigator.pop(dropdownKey.currentContext!);
-        },
-        style: menuButtonStyle,
-        child: authcheck == false
-            ? const Text(
-                "LOGIN ADM.",
-              )
-            : const Text(
-                "HOME ADM.",
-              ),
-      ),*/
-      TextButton(
-        onPressed: () {},
-        style: menuButtonStyle,
-        child: const Text(
-          "BLOG",
-        ),
-      ),
-      TextButton(
-        onPressed: () => _launchURL('https://revistacasadecor.com.br/'),
-        style: menuButtonStyle,
-        child: const Text(
-          "REVISTA",
-        ),
-      ),
-      TextButton(
-       onPressed: () {},
-        style: menuButtonStyle,
-        child: const Text(
-          "EQUIPE",
-        ),
-      ),
-      TextButton(
-        onPressed: () {},
-        style: menuButtonStyle,
-        child: const Text(
-          "CIDADES",
-        ),
-      ),
-      TextButton(
-        onPressed: () {},
-        style: menuButtonStyle,
-        child: const Text(
-          "AÇÕES",
-        ),
-      ),
-      TextButton(
-        onPressed: () {},
-        style: menuButtonStyle,
-        child: const Text(
-          "CONTATO",
-        ),
-      ),
-      TextButton(
-        onPressed: () {
-          if (ModalRoute.of(context)!.settings.name != Routes.newlogin) {
-            Navigator.pushReplacementNamed(context, Routes.newlogin);
-          }
-          //Navigator.pop(dropdownKey.currentContext!);
-        },
-        style: menuButtonStyle,
-        child: const Text(
-          "LOGIN",
-        ),
-      ),
-      // TextButton(
-      //   onPressed: () {
-      //     if (ModalRoute.of(context)!.settings.name != Routes.empresas) {
-      //       Navigator.pushReplacementNamed(
-      //           context, Routes.empresas);
-      //     }
-      //     //Navigator.pop(dropdownKey.currentContext!);
-      //   },
-      //   style: menuButtonStyle,
-      //   child: const Text(
-      //     "PARCEIROS",
-      //   ),
-      // ),
-      // authcheck == true
-      //     ? TextButton(
-      //         onPressed: () {
-      //           auth.doLogout();
-      //           Navigator.pushReplacementNamed(context, Routes.home);
-      //           //Navigator.pop(dropdownKey.currentContext!);
-      //         },
-      //         style: menuButtonStyle,
-      //         child: const Text(
-      //           "SAIR",
-      //         ),
-      //       )
-      //     : const SizedBox(
-      //         width: 0,
-      //       )
-    ];
+  void _launchURL(String url) {
+    // Aqui você pode usar o `url_launcher` se quiser abrir links
   }
 
-  routeManager() {}
-
-  menuMobile(BuildContext context) {
-    rebuild();
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 45, bottom: 15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            hoverColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            splashColor: Colors.transparent,
-            onTap: () => Navigator.popUntil(
-                context, ModalRoute.withName(Navigator.defaultRouteName)),
-            child: Text(
-              "CASA DECOR",
-              style: GoogleFonts.montserrat(
-                color: textPrimary,
-                fontSize: 15,
-                letterSpacing: 3,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ),
-          StreamBuilder<bool>(
-              stream: auth.loginCheckLoading.stream,
-              builder: (context, snapshot) {
-                return DropdownButton(
-                  key: dropdownKey,
-                  icon: const Icon(Icons.menu),
-                  disabledHint: Container(),
-                  underline: Container(),
-                  items: menuBody(snapshot.data ?? true)
-                      .map<DropdownMenuItem<Widget>>((Widget value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: value,
-                    );
-                  }).toList(),
-                  onChanged: (value) {},
-                );
-              })
-        ],
-      ),
-    );
-  }
-
-  Future<bool> rebuild() async {
-    if (!mounted) return false;
-
-    // if there's a current frame,
-    if (SchedulerBinding.instance.schedulerPhase != SchedulerPhase.idle) {
-      // wait for the end of that frame.
-      await SchedulerBinding.instance.endOfFrame;
-      if (!mounted) return false;
-    }
-
-    setState(() {});
-    return true;
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

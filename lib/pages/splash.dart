@@ -33,22 +33,22 @@ class _SplashScreenState extends State<SplashScreen>
   void _initializeAnimations() {
     // Controladores de animação
     _logoController = AnimationController(
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1500),
       vsync: this,
     );
     
     _fadeController = AnimationController(
-      duration: const Duration(milliseconds: 1300),
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
     
     _scaleController = AnimationController(
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 1200),
       vsync: this,
     );
     
     _rotationController = AnimationController(
-      duration: const Duration(milliseconds: 2500),
+      duration: const Duration(milliseconds: 2000),
       vsync: this,
     );
 
@@ -96,20 +96,20 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _startSplashSequence() async {
     // Inicia as animações em sequência
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 300));
     _logoController.forward();
     
-    await Future.delayed(const Duration(milliseconds: 700));
+    await Future.delayed(const Duration(milliseconds: 500));
     _fadeController.forward();
     
-    await Future.delayed(const Duration(milliseconds: 400));
+    await Future.delayed(const Duration(milliseconds: 200));
     _scaleController.forward();
     
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
     _rotationController.forward();
     
     // Aguarda um pouco antes de navegar
-    await Future.delayed(const Duration(milliseconds: 3000));
+    await Future.delayed(const Duration(milliseconds: 2500));
     
     if (mounted) {
       Navigator.of(context).pushReplacement(
@@ -145,9 +145,9 @@ class _SplashScreenState extends State<SplashScreen>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Theme.of(context).colorScheme.inversePrimary,
-              Theme.of(context).colorScheme.inversePrimary,
-              Theme.of(context).colorScheme.inversePrimary,
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.primaryContainer,
+              Theme.of(context).colorScheme.surface,
             ],
           ),
         ),
@@ -173,20 +173,20 @@ class _SplashScreenState extends State<SplashScreen>
                         child: RotationTransition(
                           turns: _logoRotation,
                           child: Container(
-                            width: 350,
-                            height: 350,
+                            width: 120,
+                            height: 120,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: [
-                               /* BoxShadow(
+                                BoxShadow(
                                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                                   blurRadius: 20,
                                   spreadRadius: 5,
-                                ),*/
+                                ),
                               ],
                             ),
                             child: ClipOval(
-                              child: Image.asset('assets/images/Grupo.png',
+                              child: Image.asset('assets/images/Nucleo.png',
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) {
                                   return Container(
@@ -212,7 +212,7 @@ class _SplashScreenState extends State<SplashScreen>
                   const SizedBox(height: 40),
                   
                   // Texto animado
-                  /*FadeTransition(
+                  FadeTransition(
                     opacity: _backgroundOpacity,
                     child: Column(
                       children: [
@@ -233,7 +233,7 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ],
                     ),
-                  ),*/
+                  ),
                   
                   const SizedBox(height: 60),
                   
@@ -246,7 +246,7 @@ class _SplashScreenState extends State<SplashScreen>
                       child: CircularProgressIndicator(
                         strokeWidth: 3,
                         valueColor: AlwaysStoppedAnimation<Color>(
-                          Theme.of(context).colorScheme.surface.withOpacity(0.6),
+                          Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
                         ),
                       ),
                     ),

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nucleo/controllers/company_controller.dart';
 import 'package:nucleo/kpadding.dart';
@@ -26,99 +25,81 @@ class _PartnerEnterprisesState extends State<PartnerEnterprises> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       body: WillPopScope(
         onWillPop: () async {
-          if (kIsWeb) {
-            Navigator.pop(context);
-          }
+          Navigator.pop(context); // ✅ Removido kIsWeb
           return true;
         },
         child: Padding(
           padding: const EdgeInsets.only(top: 50.0),
           child: Column(
             children: <Widget>[
-              kIsWeb
-                  ? Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 32),
-                      //child: const MenuBar1(),
-                    )
-                  : Container(),
+              // ✅ Container de topo opcional removido
               StreamBuilder<List<EnterpriseItem>>(
-                  stream: _controller.userListController.stream,
-                  builder: (context, snapshot) {
-                    return snapshot.hasData
-                        ? Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: kPadding,
-                              ),
-                              child: ResponsiveLayout(
-                                forceIpadList: true,
-                                iphone: snapshot.data!.isNotEmpty
-                                    ? ListView(
-                                        children: [
-                                          for (var data in snapshot.data!)
-                                            if (data.tipo == "EMPRESA")
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 20, bottom: 20),
-                                                child: ItemPartner(
-                                                  photo: data.photo ?? "",
-                                                  name: data.name ?? "",
-                                                  city: data.city ?? "",
-                                                ),
-                                              )
-                                        ],
-                                      )
-                                    : const Text("No data"),
-                                ipad: GridView.builder(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: kPadding),
-                                  itemCount: snapshot.data!.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: kPadding,
-                                    crossAxisSpacing: kPadding,
-                                    childAspectRatio: 1.20,
-                                  ),
-                                  itemBuilder: (context, index) => ItemPartner(
-                                    photo: snapshot.data![index].photo ?? "",
-                                    name: snapshot.data![index].name ?? "",
-                                    //description:
-                                    //  snapshot.data![index].description ?? "",
-                                    city: snapshot.data![index].city ?? "",
-                                  ),
+                stream: _controller.userListController.stream,
+                builder: (context, snapshot) {
+                  return snapshot.hasData
+                      ? Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: kPadding),
+                            child: ResponsiveLayout(
+                              forceIpadList: true,
+                              iphone: snapshot.data!.isNotEmpty
+                                  ? ListView(
+                                      children: [
+                                        for (var data in snapshot.data!)
+                                          if (data.tipo == "EMPRESA")
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 20, bottom: 20),
+                                              child: ItemPartner(
+                                                photo: data.photo ?? "",
+                                                name: data.name ?? "",
+                                                city: data.city ?? "",
+                                              ),
+                                            )
+                                      ],
+                                    )
+                                  : const Center(child: Text("Nenhum dado disponível")),
+                              ipad: GridView.builder(
+                                padding: const EdgeInsets.symmetric(horizontal: kPadding),
+                                itemCount: snapshot.data!.length,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: kPadding,
+                                  crossAxisSpacing: kPadding,
+                                  childAspectRatio: 1.20,
                                 ),
-                                macbook: GridView.builder(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: kPadding),
-                                  itemCount: snapshot.data!.length,
-                                  gridDelegate:
-                                      const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: kPadding,
-                                    crossAxisSpacing: kPadding,
-                                    childAspectRatio: 1.20,
-                                  ),
-                                  itemBuilder: (context, index) => ItemPartner(
-                                    photo: snapshot.data![index].photo ?? "",
-                                    name: snapshot.data![index].name ?? "",
-                                    // description:
-                                    //  snapshot.data![index].description ?? "",
-                                    city: snapshot.data![index].city ?? "",
-                                  ),
+                                itemBuilder: (context, index) => ItemPartner(
+                                  photo: snapshot.data![index].photo ?? "",
+                                  name: snapshot.data![index].name ?? "",
+                                  city: snapshot.data![index].city ?? "",
+                                ),
+                              ),
+                              macbook: GridView.builder(
+                                padding: const EdgeInsets.symmetric(horizontal: kPadding),
+                                itemCount: snapshot.data!.length,
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: kPadding,
+                                  crossAxisSpacing: kPadding,
+                                  childAspectRatio: 1.20,
+                                ),
+                                itemBuilder: (context, index) => ItemPartner(
+                                  photo: snapshot.data![index].photo ?? "",
+                                  name: snapshot.data![index].name ?? "",
+                                  city: snapshot.data![index].city ?? "",
                                 ),
                               ),
                             ),
-                          )
-                        : const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 250),
-                            child: CircularProgressIndicator(),
-                          );
-                  }),
+                          ),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 250),
+                          child: CircularProgressIndicator(),
+                        );
+                },
+              ),
             ],
           ),
         ),

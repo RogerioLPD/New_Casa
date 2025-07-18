@@ -46,58 +46,52 @@ class AuthService {
 
 
   Future<void> _buscarUsuarioETrocarRota(String token) async {
-    var url = Uri.parse('https://apicasadecor.com/api/usuario/1');
+  var url = Uri.parse('https://apicasadecor.com/api/usuario/1');
 
-    try {
-      var response = await http.get(
-        url,
-        headers: {
-          'Authorization': 'Token $token',
-          'Content-Type': 'application/json',
-        },
-      );
+  try {
+    var response = await http.get(
+      url,
+      headers: {
+        'Authorization': 'Token $token',
+        'Content-Type': 'application/json',
+      },
+    );
 
-      if (response.statusCode == 200) {
-        var userData = jsonDecode(response.body);
-        String userType = userData['tipo'] ?? '';
-        String segmento = userData['seguimento'] ?? '';
+    if (response.statusCode == 200) {
+      var userData = jsonDecode(response.body);
 
-        if (kDebugMode) {
-          print('Tipo: $userType');
-          print('Seguimento: $segmento');
-        }
+      String segmento = userData['seguimento'] ?? '';
+      String tipo = userData['tipo'] ?? '';
 
-        if (segmento.toUpperCase() == 'ADMIN') {
-          Navigator.pushReplacementNamed(context, Routes.loginadministrador);
-        } else if (userType.toUpperCase() == 'EMPRESA') {
-          Navigator.pushReplacementNamed(context, Routes.homeempresas);
-        } else if (userType.toUpperCase() == 'ESPECIFICADOR') {
-          Navigator.pushReplacementNamed(context, Routes.home);
-        } else {
-          Navigator.pushReplacementNamed(context, Routes.loginview);
-        }
-      } else {
-        _mostrarErro("Erro ao buscar dados do usuário.");
+      if (kDebugMode) {
+        print('Seguimento: $segmento');
+        print('Tipo: $tipo');
       }
-    } catch (e) {
-      _mostrarErro("Erro ao buscar usuário: $e");
+
+      if (segmento.toUpperCase() == 'ADMIN') {
+        Navigator.pushReplacementNamed(context, Routes.homeadministrador);
+      } else if (tipo.toUpperCase() == 'EMPRESA') {
+        Navigator.pushReplacementNamed(context, Routes.homeempresas);
+      } else if (tipo.toUpperCase() == 'ESPECIFICADOR') {
+        Navigator.pushReplacementNamed(context, Routes.homeespecificador);
+      } else {
+        _mostrarErro("Tipo de usuário não reconhecido.");
+        Navigator.pushReplacementNamed(context, Routes.loginview);
+      }
+    } else {
+      _mostrarErro("Erro ao buscar dados do usuário.");
     }
+  } catch (e) {
+    _mostrarErro("Erro ao buscar usuário: $e");
   }
+}
 
   void _mostrarErro(String mensagem) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Erro"),
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
         content: Text(mensagem),
-        actions: [
-          TextButton(
-            child: const Text("OK"),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
+        backgroundColor: Colors.red,
       ),
     );
   }
 }
-

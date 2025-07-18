@@ -28,6 +28,8 @@ import 'package:nucleo/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
+import 'components/theme.dart';
+
 void main() {
   
   runApp(const MyApp());
@@ -44,11 +46,15 @@ class MyApp extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: const [Locale("pt", "BR")],
-      theme: ThemeData(
+      /*theme: ThemeData(
+        
         useMaterial3: true,
         primarySwatch: Colors.grey,
         primaryColor: Colors.white,
-      ),
+      ),*/
+       theme: lightTheme,
+          darkTheme: darkTheme,
+          themeMode: ThemeMode.system,
       builder: (context, child) => ResponsiveWrapper.builder(
           BouncingScrollWrapper.builder(context, child!),
           maxWidth: 1200,
