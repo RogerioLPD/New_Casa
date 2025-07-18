@@ -247,7 +247,7 @@ class _HomeAdministradorState extends State<HomeAdministrador> {
                             offset: Offset(0.1, 1))
                       ], // Make rounded corner of border
                     ),
-                    child: Column(
+                    child:  Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         SizedBox(
@@ -292,7 +292,7 @@ class _HomeAdministradorState extends State<HomeAdministrador> {
                             offset: Offset(0.1, 1))
                       ], // Make rounded corner of border
                     ),
-                    child: Column(
+                    child:  Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         SizedBox(

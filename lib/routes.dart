@@ -35,6 +35,7 @@ class Routes {
     static const String release= "release";
    static const String list= "list";
    static const String rank= "rank";
+   static const String privacidade= "privacidade";
   
 
   static Route<T> fadeThrough<T>(RouteSettings settings, WidgetBuilder page,

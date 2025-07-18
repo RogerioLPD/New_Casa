@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,8 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
   bool visivelSenha = true;
   bool visivelCSenha = true;
   List<PlatformFile>? _paths;
-  /*Uint8List? _selectedBytes;
-  PlatformFile? _imageFile;*/
+  Uint8List? _selectedBytes;
+  PlatformFile? _imageFile;
 
   var regexTextAnNumber = FilteringTextInputFormatter.allow(RegExp(
       r'[a-zA-Z0-9 àèìòùÀÈÌÒÙáéíóúýÁÉÍÓÚÝâêîôûÂÊÎÔÛãñõÃÑÕäëïöüÿÄËÏÖÜŸçÇßØøÅåÆæœ]'));
@@ -39,27 +40,28 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
 
   void pickFiles() async {
     try {
-      _paths = (await FilePicker.platform.pickFiles(
+      _imageFile = (await FilePicker.platform.pickFiles(
         type: FileType.custom,
         allowMultiple: false,
         onFileLoading: (FilePickerStatus status) => print(status),
         allowedExtensions: ['png', 'jpg', 'jpeg', 'heic'],
       ))
-          ?.files;
+          ?.files
+          .first;
 
-      /*if (_paths != null) {
-      File file = File(_imageFile!.path!);
-      _selectedBytes = await file.readAsBytes();*/
-      
+      if (_imageFile != null) {
+        File file = File(_imageFile!.path!);
+        _selectedBytes = await file.readAsBytes();
 
-      // Exibir a Toast Message após o carregamento da imagem
-      Fluttertoast.showToast(
-        msg: "IMAGEM CARREGADA COM SUCESSO",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: Colors.green,
-        textColor: Colors.white,
-      );
+        // Exibir a Toast Message após o carregamento da imagem
+        Fluttertoast.showToast(
+          msg: "IMAGEM CARREGADA COM SUCESSO",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+        );
+      }
     } on PlatformException catch (e) {
       log('Unsupported operation$e');
     } catch (e) {
@@ -261,8 +263,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                             cpf: _cpfController.text.trim(),
                             email: _emailController.text,
                             password: _senhaController.text,
-                            //bytes: _selectedBytes,
-                            bytes: _paths!.first.bytes,
+                            bytes: _selectedBytes,
                           );
                           if (cadastro) {
                             // ignore: use_build_context_synchronously
@@ -298,7 +299,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     elevation: 0,
                     onPressed: () =>
-                        Navigator.pushNamed(context, Routes.homeadministrador),
+                        Navigator.pushNamed(context, Routes.loginespecificador),
                     child: Text(
                       'VOLTAR',
                       style: GoogleFonts.montserrat(

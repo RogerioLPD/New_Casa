@@ -39,13 +39,15 @@ class RankedData {
 }
 
 class ReleasesPage1 extends StatefulWidget {
+  const ReleasesPage1({super.key});
+
   @override
   _ReleasesPage1State createState() => _ReleasesPage1State();
 }
 
 class _ReleasesPage1State extends State<ReleasesPage1> {
   List<Purchase> _purchases = [];
-  Map<String, double> _sumsByEspecificador = {};
+  final Map<String, double> _sumsByEspecificador = {};
 
   List<RankedData> get sortedRankedData => _sumsByEspecificador.entries
       .map((entry) => RankedData(entry.key, entry.value, entry.value / 1000))

@@ -6,7 +6,6 @@ import 'package:nucleo/model/enterprise_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-import '../urlBase.dart';
 
 class EnterpriseController {
   StreamController<List<EnterpriseItem>> dataController =
@@ -30,7 +29,7 @@ class EnterpriseController {
     isLoading.sink.add(true);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     //String token = sharedPreferences.getString('token')!;
-    var url = Uri.parse("${urlBase}/api/empresas/");
+    var url = Uri.https("apicasadecor.com", "/api/usuario/");
     Map<String, String> headers = {
       //'Authorization': token,
   
@@ -44,9 +43,9 @@ class EnterpriseController {
     try {
       var response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
-        if (json.decode(response.body) != null) {
+        if (json.decode(response.body) != []) {
           jsonDecode(utf8.decode(response.bodyBytes));
-          item = (json.decode(mockData()) as List)
+          item = (jsonDecode(utf8.decode(response.bodyBytes)) as List)
               .map((data) => EnterpriseItem.fromJson(data))
               .toList();
 

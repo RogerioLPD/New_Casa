@@ -1,13 +1,8 @@
-import 'dart:developer';
 
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:nucleo/components/blog.dart';
 import 'package:nucleo/components/color.dart';
 import 'package:nucleo/controllers/administrator_controller.dart';
 

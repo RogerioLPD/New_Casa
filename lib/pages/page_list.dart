@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nucleo/components/components.dart';
-import 'package:nucleo/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 // ignore: todo
@@ -28,7 +27,7 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     super.initState();
     // Aguarda o fim do initState e, em seguida, exibe o Popout
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       _showPopout(context);
     });
   }
@@ -45,7 +44,7 @@ class _ListPageState extends State<ListPage> {
                 children: <Widget>[
                   const MenuBar1(),
                   Image.asset(
-                    'assets/images/Nucleo.png',
+                    'assets/images/Logo.png',
                     width: 400,
                     height: 140,
                     fit: BoxFit.fill,
@@ -63,7 +62,7 @@ class _ListPageState extends State<ListPage> {
                       description: listItemPreviewText),
                   divider,
                   Image.asset(
-                    'assets/images/home.png',
+                    'assets/images/home.jpg',
                     width: double.infinity,
                     height: 600,
                     fit: BoxFit.contain,
@@ -98,7 +97,7 @@ void _showPopout(BuildContext context) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Container(
+      return SizedBox(
         height: 300,
             width: 400,
         child: AlertDialog(
@@ -115,7 +114,7 @@ void _showPopout(BuildContext context) {
           print("Tap Event");
         },
           ),*/
-          content: Container(
+          content: SizedBox(
             height:300,
             width: 400, // Ajuste esse valor para definir a largura do content do AlertDialog
             child: Column(

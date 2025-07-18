@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:intl/intl.dart';
 
 class User {
   final int id;
@@ -31,6 +30,8 @@ class User {
 }
 
 class UserListPage1 extends StatefulWidget {
+  const UserListPage1({super.key});
+
   @override
   _UserListPage1State createState() => _UserListPage1State();
 }
@@ -85,10 +86,10 @@ class _UserListPage1State extends State<UserListPage1> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Usuários'),
+        title: const Text('Lista de Usuários'),
       ),
       body: _users.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _users.length,
               itemBuilder: (context, index) {

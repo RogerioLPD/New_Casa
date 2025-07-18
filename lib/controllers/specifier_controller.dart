@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nucleo/model/acquisitions_item.dart';
 import 'package:nucleo/model/user_details.dart';
-import 'package:nucleo/pages/premios/viagem_item.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

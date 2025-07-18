@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Empresa {
   final String foto;
@@ -24,6 +23,8 @@ class Empresa {
 }
 
 class UserListPage extends StatefulWidget {
+  const UserListPage({super.key});
+
   @override
   _UserListPageState createState() => _UserListPageState();
 }
@@ -64,10 +65,10 @@ class _UserListPageState extends State<UserListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Empresas'),
+        title: const Text('Lista de Empresas'),
       ),
       body: _empresas.isEmpty
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : ListView.builder(
               itemCount: _empresas.length,
               itemBuilder: (context, index) {
@@ -75,7 +76,7 @@ class _UserListPageState extends State<UserListPage> {
                // final itemNumber = index + 1; // Número do item na lista
 
                 return ListTile(
-                  title: Text('${empresa.nome}'),
+                  title: Text(empresa.nome),
                   subtitle: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +23,7 @@ class AdministradorController {
       Uint8List? bytes}) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
-    print('TOKEN ${token}');
+    print('TOKEN $token');
     String image = base64.encode(bytes!);
     var url =
         Uri.parse("https://apicasadecor.com/api/cadastro/empresa/");
@@ -174,7 +173,7 @@ Future<bool> updateEspecificador({
   }) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString('token');
-    print('TOKEN ${token}');
+    print('TOKEN $token');
 
     // Codificar a imagem em base64 se for fornecida.
    // String image = base64.encode(bytes!);
@@ -219,6 +218,39 @@ Future<bool> updateEspecificador({
       return false;
     }
   }
+
+  Future<bool> checkIfCpfCnpjExists(String cpfCnpj) async {
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  String? token = sharedPreferences.getString('token');
+  print('TOKEN $token');
+
+  var url = Uri.parse("https://apicasadecor.com/api/especificador/");
+  Map<String, String> headers = {
+    'Authorization': "Token $token",
+  };
+
+  // Adicione um parâmetro para a busca do CPF ou CNPJ na URL
+  url = url.replace(queryParameters: {'cpf': cpfCnpj});
+
+  try {
+    var response = await http.get(url, headers: headers);
+    print(response.body);
+    if (response.statusCode == 200) {
+      // Se a resposta for 200, o CPF ou CNPJ já existe
+      return true;
+    } else if (response.statusCode == 404) {
+      // Se a resposta for 404, o CPF ou CNPJ não existe
+      return false;
+    } else {
+      // Outros códigos de status podem ser tratados conforme necessário
+      return false;
+    }
+  } catch (e) {
+    print(e.toString());
+    return false;
+  }
+}
+
 
    Future<bool> deleteUsuario(int id) async {
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();

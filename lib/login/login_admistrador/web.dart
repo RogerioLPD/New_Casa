@@ -50,7 +50,6 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
       /*if (_paths != null) {
       File file = File(_imageFile!.path!);
       _selectedBytes = await file.readAsBytes();*/
-      
 
       // Exibir a Toast Message após o carregamento da imagem
       Fluttertoast.showToast(
@@ -298,7 +297,7 @@ class _CadastroEspecificadorState extends State<CadastroEspecificador> {
                     padding: const EdgeInsets.symmetric(horizontal: 6),
                     elevation: 0,
                     onPressed: () =>
-                        Navigator.pushNamed(context, Routes.homeadministrador),
+                        Navigator.pushNamed(context, Routes.loginespecificador),
                     child: Text(
                       'VOLTAR',
                       style: GoogleFonts.montserrat(

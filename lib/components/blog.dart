@@ -6,10 +6,8 @@ import 'package:nucleo/components/spacing.dart';
 import 'package:nucleo/components/text.dart';
 import 'package:nucleo/components/typography.dart';
 import 'package:nucleo/controllers/authenticator_controller.dart';
-import 'package:nucleo/responsive.dart';
 import 'package:nucleo/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:nucleo/controllers/authenticator_controller.dart';
 class ImageWrapper extends StatelessWidget {
   final String image;
 

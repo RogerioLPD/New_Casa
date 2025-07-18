@@ -1,15 +1,12 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 import 'package:nucleo/components/color.dart';
 import 'package:nucleo/controllers/authenticator_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../routes.dart';
 
@@ -70,7 +67,7 @@ class _LoginEspecificadorState extends State<LoginEspecificador> {
                     height: MediaQuery.of(context).size.height * .0,
                   ),
                   Image.asset(
-                    'assets/images/Logo.png',
+                    'assets/images/Logo.jpg',
                     width: 460,
                     height: 240,
                     fit: BoxFit.contain,

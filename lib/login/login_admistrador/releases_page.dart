@@ -31,6 +31,8 @@ class Purchase {
 }
 
 class ReleasesPage extends StatefulWidget {
+  const ReleasesPage({super.key});
+
   @override
   _ReleasesPageState createState() => _ReleasesPageState();
 }

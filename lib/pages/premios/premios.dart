@@ -5,10 +5,9 @@ import 'package:nucleo/controllers/rewards_controller.dart';
 import 'package:nucleo/kpadding.dart';
 import 'package:nucleo/pages/premios/item.dart';
 import 'package:nucleo/responsive.dart';
-import 'package:nucleo/routes.dart';
 
 class RewardsPage extends StatefulWidget {
-  RewardsPage({Key? key}) : super(key: key);
+  const RewardsPage({Key? key}) : super(key: key);
 
   @override
   State<RewardsPage> createState() => _RewardsPageState();

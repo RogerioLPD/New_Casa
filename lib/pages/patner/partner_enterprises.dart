@@ -1,23 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_searchbox/modal_searchbox.dart';
-import 'package:nucleo/components/blog.dart';
-import 'package:nucleo/controllers/enterprise_controller.dart';
+import 'package:nucleo/controllers/company_controller.dart';
 import 'package:nucleo/kpadding.dart';
 import 'package:nucleo/model/enterprise_item.dart';
 import 'package:nucleo/pages/patner/item.dart';
 import 'package:nucleo/responsive.dart';
-import 'package:nucleo/routes.dart';
 
 class PartnerEnterprises extends StatefulWidget {
-  PartnerEnterprises({super.key});
+  const PartnerEnterprises({super.key});
 
   @override
   State<PartnerEnterprises> createState() => _PartnerEnterprisesState();
 }
 
 class _PartnerEnterprisesState extends State<PartnerEnterprises> {
-  final EnterpriseController _controller = EnterpriseController();
+  final CompanyController _controller = CompanyController();
 
   var selectedCountry = "Selecionar";
 
@@ -48,72 +45,31 @@ class _PartnerEnterprisesState extends State<PartnerEnterprises> {
                       //child: const MenuBar1(),
                     )
                   : Container(),
-              StreamBuilder<List<String>>(
-                stream: _controller.cityController.stream,
-                builder: (context, snapshot) {
-                  return snapshot.hasData
-                      ? Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 32),
-                          child: ModalSearchbox(
-                              padding: const EdgeInsets.all(0),
-                              showLabel: false,
-                              label: "",
-                              addSearch: true,
-                              selectedValue: selectedCountry,
-                              list: snapshot.data!,
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 3),
-                              onChanged: (v) {
-                                _controller.makeSearchBox(v);
-                              }),
-                        )
-                      : Container();
-                },
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               StreamBuilder<List<EnterpriseItem>>(
-                  stream: _controller.dataController.stream,
+                  stream: _controller.userListController.stream,
                   builder: (context, snapshot) {
                     return snapshot.hasData
                         ? Expanded(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: kPadding),
+                                horizontal: kPadding,
+                              ),
                               child: ResponsiveLayout(
                                 forceIpadList: true,
-                                // iphone: GridView.builder(
-                                //   padding: const EdgeInsets.symmetric(
-                                //       horizontal: kPadding),
-                                //   itemCount: snapshot.data!.length,
-                                //   gridDelegate:
-                                //       const SliverGridDelegateWithFixedCrossAxisCount(
-                                //     crossAxisCount: 1,
-                                //     mainAxisSpacing: kPadding,
-                                //     crossAxisSpacing: kPadding,
-                                //     childAspectRatio: 1,
-                                //   ),
-                                //   itemBuilder: (context, index) => Item(
-                                //     photo: snapshot.data![index].photo ?? "",
-                                //     name: snapshot.data![index].name ?? "",
-                                //     city: snapshot.data![index].city ?? "",
-                                //   ),
-                                // ),
                                 iphone: snapshot.data!.isNotEmpty
                                     ? ListView(
                                         children: [
                                           for (var data in snapshot.data!)
-                                            Padding(
-                                              padding: const EdgeInsets.only(top: 20, bottom: 20),
-                                              child: ItemPartner(
-                                                photo: data.photo ?? "",
-                                                name: data.name ?? "",
-                                                description:
-                                                    data.description ?? "",
-                                                city: data.city ?? "",
-                                              ),
-                                            )
+                                            if (data.tipo == "EMPRESA")
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 20, bottom: 20),
+                                                child: ItemPartner(
+                                                  photo: data.photo ?? "",
+                                                  name: data.name ?? "",
+                                                  city: data.city ?? "",
+                                                ),
+                                              )
                                         ],
                                       )
                                     : const Text("No data"),
@@ -131,8 +87,8 @@ class _PartnerEnterprisesState extends State<PartnerEnterprises> {
                                   itemBuilder: (context, index) => ItemPartner(
                                     photo: snapshot.data![index].photo ?? "",
                                     name: snapshot.data![index].name ?? "",
-                                    description:
-                                        snapshot.data![index].description ?? "",
+                                    //description:
+                                    //  snapshot.data![index].description ?? "",
                                     city: snapshot.data![index].city ?? "",
                                   ),
                                 ),
@@ -150,8 +106,8 @@ class _PartnerEnterprisesState extends State<PartnerEnterprises> {
                                   itemBuilder: (context, index) => ItemPartner(
                                     photo: snapshot.data![index].photo ?? "",
                                     name: snapshot.data![index].name ?? "",
-                                    description:
-                                        snapshot.data![index].description ?? "",
+                                    // description:
+                                    //  snapshot.data![index].description ?? "",
                                     city: snapshot.data![index].city ?? "",
                                   ),
                                 ),

@@ -1,14 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nucleo/components/blog.dart';
 import 'package:nucleo/controllers/specifier_controller.dart';
 import 'package:nucleo/model/acquisitions_item.dart';
 import 'package:nucleo/responsive.dart';
-import 'package:nucleo/routes.dart';
-import 'package:nucleo/utils/custom_text_styles.dart';
 
 class ReleasesEspecificador extends StatefulWidget {
-  ReleasesEspecificador({Key? key}) : super(key: key);
+  const ReleasesEspecificador({Key? key}) : super(key: key);
 
   @override
   State<ReleasesEspecificador> createState() => _ReleasesEspecificadorState();

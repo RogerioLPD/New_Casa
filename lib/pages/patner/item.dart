@@ -5,14 +5,14 @@ import 'package:nucleo/kpadding.dart';
 class ItemPartner extends StatelessWidget {
   final String? photo;
   final String name;
-  final String? description;
+ // final String? description;
   final String city;
 
-  ItemPartner({
+  const ItemPartner({
     Key? key,
     required this.photo,
     required this.name,
-    required this.description,
+    //required this.description,
     required this.city,
   }) : super(key: key);
 
@@ -68,14 +68,14 @@ class ItemPartner extends StatelessWidget {
               textAlign: TextAlign.justify,
             ),
           ),
-           Container( // Container adicionado para envolver a descrição
+           /*Container( // Container adicionado para envolver a descrição
             padding: const EdgeInsets.symmetric(vertical: kPadding / 4, ), // Ajuste as margens conforme necessário
             child: Text(
               description ?? "",
               style: TextStyle(color: Colors.black.withOpacity(0.5)),
               textAlign: TextAlign.justify,
             ),
-          ),
+          ),*/
           Text(
             city,
             style: TextStyle(color: Colors.black.withOpacity(0.5)),

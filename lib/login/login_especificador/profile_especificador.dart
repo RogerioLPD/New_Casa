@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nucleo/controllers/authenticator_controller.dart';
@@ -11,7 +10,7 @@ import 'package:nucleo/routes.dart';
 import 'package:nucleo/controllers/administrator_controller.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 class ProfileEspecificador extends StatefulWidget {
-  ProfileEspecificador({super.key});
+  const ProfileEspecificador({super.key});
 
   @override
   State<ProfileEspecificador> createState() => _ProfileEspecificadorState();
@@ -363,7 +362,7 @@ class _ProfileEspecificadorState extends State<ProfileEspecificador> {
                     child: Text(
                       'EXCLUIR CONTA',
                       style: GoogleFonts.montserrat(
-                        color: Color.fromARGB(255, 252, 25, 25),
+                        color: const Color.fromARGB(255, 252, 25, 25),
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),
@@ -444,7 +443,7 @@ bodyForWeb(BuildContext context, AsyncSnapshot snapshot) {
                         // Por exemplo:
                         // _fetchDataAgain();
                       },
-                      child: Text('Atualizar Dados'),
+                      child: const Text('Atualizar Dados'),
                     ),
                   )
                 : CachedNetworkImage(
@@ -678,7 +677,7 @@ bodyForWeb(BuildContext context, AsyncSnapshot snapshot) {
                     child: Text(
                       'EXCLUIR CONTA',
                       style: GoogleFonts.montserrat(
-                        color: Color.fromARGB(255, 252, 25, 25),
+                        color: const Color.fromARGB(255, 252, 25, 25),
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1,
                       ),

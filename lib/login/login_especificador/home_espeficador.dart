@@ -10,13 +10,12 @@ import 'package:nucleo/login/login_especificador/carrossel.dart';
 import 'package:nucleo/login/login_especificador/profile_especificador.dart';
 import 'package:nucleo/login/login_especificador/releases_especificador.dart';
 import 'package:nucleo/model/acquisitions_item.dart';
-import 'package:nucleo/pages/patner/partner_enterprises.dart';
 import 'package:nucleo/pages/premios/premios.dart';
 import 'package:nucleo/responsive.dart';
 import 'package:nucleo/routes.dart';
 
 class HomeEspecificador extends StatefulWidget {
-  HomeEspecificador({super.key});
+  const HomeEspecificador({super.key});
 
   @override
   State<HomeEspecificador> createState() => _HomeEspecificadorState();
@@ -56,10 +55,10 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
         controller: _controller.pageController,
         children: [
           bodyForMobile(context),
-          ReleasesEspecificador(),
-          RewardsPage(),
-          UserListPage(),
-          ProfileEspecificador()
+          const ReleasesEspecificador(),
+          const RewardsPage(),
+          const UserListPage(),
+          const ProfileEspecificador()
         ],
       ),
       bottomNavigationBar: BottomAppBar(
@@ -414,7 +413,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                        fontSize: 20,
                      ),
                     ),
-                    SizedBox(height: 30,),
+                    const SizedBox(height: 30,),
                     Expanded(
               child: Container( // Novo Container para envolver o Expanded
                 alignment: Alignment.bottomCenter, // Alinhamento no final da Row
@@ -440,7 +439,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                                       decoration: const BoxDecoration(
                                         color: Colors.white,
                                       ),
-                                      child: Column(
+                                      child:  Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: const <Widget>[
                                           Icon(
@@ -661,15 +660,15 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Expanded(
-        child: Container(
+                  const Expanded(
+        child: SizedBox(
           
           width: 400,
           child: ImageCarousel(
-            imageAssetPaths: const [
+            imageAssetPaths: [
               'assets/images/casadecor.png',
               'assets/images/porto.png',
               'assets/images/argentina.jpg',
@@ -680,7 +679,7 @@ class _HomeEspecificadorState extends State<HomeEspecificador> {
           ),
         ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
               

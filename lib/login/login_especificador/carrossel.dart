@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class ImageCarousel extends StatelessWidget {
   final List<String> imageAssetPaths;
 
-  ImageCarousel({required this.imageAssetPaths});
+  const ImageCarousel({super.key, required this.imageAssetPaths});
 
   @override
   Widget build(BuildContext context) {

@@ -60,10 +60,10 @@ class _HiddenDrawerNavState extends State<HiddenDrawerNav>
             flex: 1,
             child: Column(
               children: [
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 Container(
                   
-                  color: Color.fromARGB(255, 20, 1, 105),
+                  color: const Color.fromARGB(255, 20, 1, 105),
                   alignment: Alignment.topCenter,
                   child: Image.asset('assets/images/Logo.png'),
                 ),
@@ -88,8 +88,8 @@ class _HiddenDrawerNavState extends State<HiddenDrawerNav>
       position: _slideAnimation,
       child: ScaleTransition(
         scale: _menuScaleAnimation,
-        child: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+        child:  Padding(
+          padding: EdgeInsets.only(left: 16.0),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Column(
@@ -132,7 +132,7 @@ class _HiddenDrawerNavState extends State<HiddenDrawerNav>
           animationDuration: duration,
           borderRadius: const BorderRadius.all(Radius.circular(40)),
           elevation: 8,
-          color: Color.fromARGB(255, 7, 0, 99),
+          color: const Color.fromARGB(255, 7, 0, 99),
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
             physics: const ClampingScrollPhysics(),
@@ -225,7 +225,7 @@ class _HiddenDrawerNavState extends State<HiddenDrawerNav>
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            Row(
+                                             Row(
                                               children: const <Widget>[
                                                 Icon(
                                                   Icons.star,

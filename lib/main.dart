@@ -6,7 +6,6 @@ import 'package:nucleo/login/login_admistrador/home_administrador.dart';
 import 'package:nucleo/login/login_admistrador/rank.dart';
 import 'package:nucleo/login/login_admistrador/releases_page.dart';
 import 'package:nucleo/login/login_admistrador/user_list.dart';
-import 'package:nucleo/login/login_empresas/listar.dart';
 import 'package:nucleo/login/login_especificador/home_espeficador.dart';
 import 'package:nucleo/login/login_especificador/profile_especificador.dart';
 import 'package:nucleo/login/login_especificador/releases_especificador.dart';
@@ -22,9 +21,9 @@ import 'package:nucleo/login/login_especificador/update_especificador.dart';
 import 'package:nucleo/pages/newlogin.dart';
 import 'package:nucleo/pages/pages.dart';
 import 'package:nucleo/pages/patner/partner_enterprises.dart';
+import 'package:nucleo/pages/politica.dart';
 import 'package:nucleo/pages/premios/premios.dart';
 import 'package:nucleo/pages/splash_screen.dart';
-import 'package:nucleo/responsive.dart';
 import 'package:nucleo/routes.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -80,7 +79,7 @@ class MyApp extends StatelessWidget {
             case Routes.loginespecificador:
               return const LoginEspecificador();
             case Routes.homeespecificador:
-              return HomeEspecificador();
+              return const HomeEspecificador();
             case Routes.loginadministrador:
               return const LoginAdministrador();
             case Routes.registerempresas:
@@ -96,17 +95,17 @@ class MyApp extends StatelessWidget {
             case Routes.homeadministrador:
               return const HomeAdministrador();
             case Routes.extrato:
-              return ReleasesEspecificador();
+              return const ReleasesEspecificador();
             case Routes.profile:
-              return ProfileEspecificador();
+              return const ProfileEspecificador();
             case Routes.newlogin:
               return const LoginHome();
             case Routes.company:
               return const EmpresaCadastroScreen();
             case Routes.premios:
-              return RewardsPage();
+              return const RewardsPage();
             case Routes.empresas:
-              return PartnerEnterprises();
+              return const PartnerEnterprises();
             case Routes.menuside:
               return const MenuSide();
             case Routes.lancamentos:
@@ -116,11 +115,13 @@ class MyApp extends StatelessWidget {
             /*case Routes.listar:
               return  UserListPage();*/
               case Routes.release:
-              return  ReleasesPage();
+              return  const ReleasesPage();
               case Routes.list:
-              return  UserListPage1();
+              return  const UserListPage1();
               case Routes.rank:
-              return  ReleasesPage1();
+              return  const ReleasesPage1();
+              case Routes.privacidade:
+              return  const PoliticPage();
                
             default:
               return const SizedBox.shrink();
